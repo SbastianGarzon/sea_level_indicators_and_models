@@ -1,0 +1,5 @@
+\item[GIA] Glacial Isostatic Adjustment
+\item[LIG] Last Interglacial period
+\item[MIS] Marine Isotope Stages
+\item[SLI] Sea-level Index point
+\item[WALIS] World Atlas of Last Interglacial Shorelines

@@ -1,0 +1,12 @@
+I hereby confirm that this thesis on *A methodology to compare sea-level indicators and sea-level models* is solely my own work and that I have used no sources or aids other than the ones stated. All passages in my thesis for which other sources, including electronic media, have been used, be it direct quotes or content references, have been acknowledged as such and the sources cited.
+
+\vspace{30 mm}
+\noindent \rule{4cm}{0.1pt} 
+Münster, \today 
+\vspace{10ex}
+
+\noindent I agree to have my thesis checked in order to rule out potential similarities with other works and to have my thesis stored in a database for this purpose.
+
+\vspace{30 mm}
+\noindent \rule{4cm}{0.4pt}
+Münster, \today

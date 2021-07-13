@@ -1,0 +1,22 @@
+---
+#########################################
+# options for knitting a single chapter #
+#########################################
+output:
+  bookdown::pdf_document2:
+    template: templates/brief_template.tex
+    citation_package: biblatex
+  bookdown::html_document2: default
+  bookdown::word_document2: default
+documentclass: book
+bibliography: references.bib
+---
+# Introduction {-}
+\adjustmtc
+\markboth{Introduction}{}
+
+Discussions about the importance of sea-level changes and their causes and consequences are common in multiple academic and non-academic spaces [@Shennan2015handbook]. New records from modern techniques as satellite observation and tide gauges provide an increasing influx of information about the real-time evolution of this phenomenon, facilitating its study. However, as pointed by Shennan et al. [-@Shennan2015handbook], the understanding of sea-level changes requires additional information, beyond modern technique records, to identify long trends driving changes in sea level. For example, the study of long-term sea-level changes improves the ability to predict the consequences of a warmer world by comparing with periods with similar conditions such as the Marine Isotope Stage (MIS) (128-118 ka) [@rovere2019world]. To study long timescales (thousands to hundred thousands of years), scientists use multiple techniques and approaches. On the one hand, the measurement, dating, and proxy reconstruction of sea-level indicators (SLI) allow researchers to determine the vertical elevation of the past sea level in a specific location and time. On the other hand, researchers use computational modeling to describe the dynamics of global, regional, and local drivers of sea-level changes.
+
+Even though both proxy reconstruction and modeling data are part of the same equation to reconstruct sea-level changes, there are multiple challenges to integrating their results. First, sea-level indicators (SLI) and models usually result from two different research communities, so integration in a shared reference frame is required. In this sense, Shennan et al. [-@Shennan2015handbook] point to the multiple definitions of relevant terms as *sea level* and *relative sea-level* between the two communities that difficult results' integration. Second, sea-level indicators (SLI) result from multiple techniques with different age and relative sea-level (RSL) uncertainties and distributions. For this reason, statistical methods need to be employed to compare SLI with a mathematically derived model. In this regard, Ashe et al. [-@ashe2019statistical] mention the challenges to integrate SLI data into statical methods due to the non-gaussian nature of some of its features and the temporal uncertainties of the data. Similarly, multiple authors mentioned the importance of standardized SLI data to guarantee correct use of data to build and interpret models see [@Shennan2015handbook; @ashe2019statistical; and @hijma2015protocol]. In summary, the lack of compatibility of the data and methods to analyze both SLI and models difficult the integration of two important sources of sea-level information.
+
+In that context, this project aims to facilitate the integration of different data and tools used in sea-level research to study sea-level change drivers for the Last Interglacial period (LIG). Specific objectives of this project consist of developing tools to manage SLI points from a standardized database, integrate this information with available statistical analysis of SLI and physical models, and generate relevant information for discussion of the model's results. Despite recent efforts for SLI standardization [see @hijma2015protocol; and @rovere2019world] and multiple approaches for statistical analysis of SLI [see @ashe2019statistical], there is a knowledge gap on how to integrate data and models in a way that facilitates its management and discussion. The significance of this approach is to provide sea-level researchers from both SLI and modeling communities tools to explore, integrate, understand and discuss their research results in a way that guarantees better traceability of their data and methods.
