@@ -1,0 +1,48 @@
+---
+#########################################
+# options for knitting a single chapter #
+#########################################
+output:
+  #bookdown::html_document2: default
+  #bookdown::word_document2: default
+  bookdown::pdf_document2:
+    template: templates/brief_template.tex
+    citation_package: biblatex
+documentclass: book
+bibliography: references.bib
+---
+# Theoretical framework {#framework}
+
+## Sea level and relative sea-level
+
+Following the definition proposed by @mitrovica2003post and the notation suggested by @Shennan2015handbook, *sea level* is defined as the region between the geoid (**G**) and the solid surface (**R**) for a geographic location $\varphi$ at a time **t**.
+
+## Sea level indicators
+
+A Sea level indicator (SLI) is the collection of evidence and interpretation of preserved featuares that allows to reliably estimate paleo-sea levels by defining four parameters: location, age, elevation and tendency [@Shennan2015handbook]. Main sources of evidence for these features include sedimentary, fossil and archeological material, and morphological characteristics of certain areas [@Shennan2015handbook]. As the extraction of location, age, elevation and tendency of SLI requires the combination of interpretations of multiple features, SLI are consider the result of proxy reconstruction methods rather than observations of sea-level [@Shennan2015handbook]. 
+
+A SLI could be summarize in a short phrase:
+
+> *"Sea level -__age parameter__- years ago at -__location parameter__- was -__elevation parameter__- meters above/below current sea-level"*
+
+However, the context of the final numeric parameters is given by the details of the preserved features, the combination of results of different techniques and the interpretations with different errors and uncertainties [See @Shennan2015handbook ; @hijma2015protocol]. In this regard, @hijma2015protocol proposed a structure for a sea-level database to store the required context for the SLI and avoid erroneous inferences. This information includes details about the samples (evidence), dating techniques (age), elevation measurements, datums and error of measurements. 
+
+### Age
+
+The age of a SLI results from the absolute or relative dating of its features. Availabily of absolute dating techniques depends on the features and type of material to date. Common techniques for samples during the Last Glacial
+period (LIG) includes ${}^{14}$C, U-Series and luminescence [see @hijma2015protocol; and @Shennan2015handbook] and are usually reported as calibrated ages with 95% limits of confidence. 
+
+
+### Elevation
+
+
+
+## Sea level indicators types
+### Limiting
+### Sea level index points
+### Sea level indicators models
+## Sea level models
+### Global Isostatic adjustment models
+
+
+
