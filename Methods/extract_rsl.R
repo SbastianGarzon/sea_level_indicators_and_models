@@ -30,7 +30,6 @@ sampling_rsl<-function(df,n_samples){
   return(unlist(my_sample))
 }
 
-
 extract_rsl <- function(df,n_samples){
   result<- c()
   result$distribution$total <- df[c('WALIS_ID','Type.of.datapoint','RSL.Indicator',

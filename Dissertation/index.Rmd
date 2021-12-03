@@ -54,14 +54,9 @@ abbreviations-heading: List of Abbreviations
 ### citation and bibliography style ###
 bibliography-heading-in-pdf: References
   
-# biblatex options #
-# unless you run into 'biber' error messages, use natbib as it lets you customise your bibliography directly
-use-biblatex: true
-bib-latex-options: "style=authoryear, sorting=nyt, backend=biber, maxcitenames=2, useprefix, doi=true, isbn=false, uniquename=false" #for science, you might want style=numeric-comp, sorting=none for numerical in-text citation with references in order of appearance
-
 # natbib options #
 # natbib runs into fewer errors than biblatex, but to customise your bibliography you need to fiddle with .bst files
-use-natbib: false # to use natbib, set this to true, and change "output:bookdown::pdf_book:citation_package:" to "natbib"
+use-natbib: true # to use natbib, set this to true, and change "output:bookdown::pdf_book:citation_package:" to "natbib"
 natbib-citation-style: authoryear #for science, you might want numbers,square
 natbib-bibliography-style: templates/ACM-Reference-Format.bst #e.g. "plainnat", unsrtnat, or path to a .bst file
 
@@ -97,7 +92,7 @@ running-header-position-rightmark: RE  #marks the section.
 
 
 ### draft mark ###
-draft-mark: false # add a DRAFT mark?
+draft-mark: true # add a DRAFT mark?
 draft-mark-foot-or-head: foot ##'foot' = in footer, 'head' = in header
 draft-mark-position: C
 
@@ -117,7 +112,7 @@ space-before-code-block: 10pt
 space-after-code-block: 8pt
 
 ### linespacing ###
-linespacing: 22pt plus2pt # 22pt is official for submission & library copies
+linespacing: 18pt # 22pt is official for submission & library copies
 frontmatter-linespacing: 17pt plus1pt minus1pt #spacing in roman-numbered pages (acknowledgments, table of contents, etc.)
 
 ### other stuff ###
@@ -130,7 +125,7 @@ includeline-num: false #show line numbering in PDF?
 #####################
 output:
   bookdown::pdf_book:
-    citation_package: biblatex
+    citation_package: natbib
     template: templates/template.tex
     keep_tex: true
     pandoc_args: "--lua-filter=scripts_and_filters/colour_and_highlight.lua"

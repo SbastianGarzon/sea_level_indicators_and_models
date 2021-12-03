@@ -5,7 +5,7 @@ combine_peaks <- function(initial_dist,peaks_dist){
     distri<-peaks_dist
   }
   else{
-    distri<-initial_dist[c('Lower.Age','Upper.age','prob')]
+    distri<-initial_dist[c('Lower.age','Upper.age','prob')]
   }
   distri<-data.frame(distri)
   return(distri)
@@ -28,8 +28,16 @@ peak_intersection<-function(peaks,upp,low){
   return(peaks_in_range)
 }
 
-extract_age <- function(df, n_samples, uniform_peaks = FALSE, peaks= c()) {
-
+extract_age <- function(df, n_samples, peaks= c()) {
+  
+  # Sample around peaks FALSE
+  uniform_peaks <-  FALSE
+  
+  # If peaks are provided, sample around peaks
+  if (length(peaks)>0){
+    uniform_peaks <- TRUE
+  }
+  
   merge <- c()
   merge$distributions$total <- df[c('WALIS_ID','Type.of.datapoint','RSL.Indicator',
                                   'Age.calculation.from','Age_mu','Age_2s',
@@ -86,7 +94,6 @@ extract_age <- function(df, n_samples, uniform_peaks = FALSE, peaks= c()) {
   }
   return(merge)
 }
-
 
 dist_funct<-function(dist){
   if (dist[['Age.calculation.from']] == 'Radiometric dating'){
