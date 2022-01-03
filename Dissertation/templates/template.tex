@@ -209,7 +209,7 @@ $if(use-natbib)$
 $endif$
 
 % This makes the bibliography left-aligned (not 'justified') and slightly smaller font.
-\renewcommand*{\bibfont}{\raggedright\small}
+\renewcommand*{\bibfont}{\fontsize{8}{1}\selectfont}
 
 
 % Uncomment this if you want equation numbers per section (2.3.12), instead of per chapter (2.18):
@@ -392,8 +392,7 @@ $body$
 
 %%%%% REFERENCES
 $if(use-biblatex)$
-\setlength{\baselineskip}{0pt} % JEM: Single-space References
-
+\setstretch{0.2}
 {\renewcommand*\MakeUppercase[1]{#1}%
 \printbibliography[heading=bibintoc,title={\bibtitle}]}
 $endif$

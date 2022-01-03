@@ -215,8 +215,8 @@ University of M\"unster \par
 \end{small} 
 \columnbreak
 {\it {\@cosupervisor}\par}
-\begin{small} Center for Marine Environmental Sciences\par
-University of Bremen\par
+\begin{small}
+University of Venice\par
 \end{small} 
 \end{multicols} 
 \vspace*{10mm}

@@ -4,7 +4,7 @@
 \item[MIS] Marine Isotope Stages
 \item[RSL] Relative Sea Level
 \item[RWL] Reference Water Level
-\item[SLI] Sea-level Indicator
+\item[SLI(s)] Sea-level Indicator(s)
 \item[SLIP(s)] Sea-level index point(s)
 \item[WALIS] World Atlas of Last Interglacial Shorelines
 

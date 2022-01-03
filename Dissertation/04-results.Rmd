@@ -57,14 +57,14 @@ walis<- st_as_sf(walis,coords=c("Longitude","Latitude"),crs=st_crs(4326))
 nc_data <- nc_open('../Data/GIA_Austermann_2019.nc')
 
 ## Sea level stack
-sl_stack <- read.csv("../Data/sea_level",sep = "")
+sl_stack <- read.csv("../Data/sea_level_stack_spratt.csv",sep = "")
 ```
 
 ## South American Atlantic coast (5-55º S)
 
 ### Area of study
 
-The analysis of the South American Atlantic coast (See Figure \@ref(fig:area-of-study-south-america)) comprises four different regions selected to compare the difference between sea-level indicators and GIA models using the proposed methodology in a passive margin. These areas correspond to the North East (BR[NE]) and South of Brazil (BR[S]), the Northern Argentinian and Uruguayan coast (ARG[NE]-UY), and the southeast of Argentina (ARG[SE]). There are a total number of 250 Sea level index points (type of data point) in the whole area of study. The criteria used to define the areas correspond to proximity (latitudinal distance) between sea-level indicators. Table \@ref(tab:sa-atlantic-num-slip) shows the total number of SLIP and the origin of their age calculation (i.e., radiometric dating or MIS assignment).
+The South American Atlantic coast (see Figure \@ref(fig:area-of-study-south-america)) comprises four different regions selected to compare the difference between sea-level indicators and GIA models using the proposed methodology in a passive margin. These areas correspond to the North East (BR[NE]) and South of Brazil (BR[S]), the Northern Argentinian and Uruguayan coast (ARG[NE]-UY), and the southeast of Argentina (ARG[SE]). There are a total number of 250 Sea level index points in the whole area of study. The selected sea-level index points are part of two SLIs compilations for the South American Atlantic coast published by @Rubio2021 and @Gowan2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 46 different publications in five different languages (English, Portuguese, Spanish, French, and German) since 1973 in this region. The criteria used to define the areas correspond to proximity (latitudinal distance) between sea-level indicators. Table \@ref(tab:sa-atlantic-num-slip) shows the total number of SLIP and the origin of their age calculation (i.e., radiometric dating or MIS assignment).
 
 ```{r area-of-study-south-america,cache=TRUE, fig.cap= 'South American Atlantic coast. Regions and sea-level indicators location.',fig.scap= 'South American Atlantic coast.', echo = FALSE, message = FALSE,error=FALSE,warning=FALSE,results='hide', out.width = "50%",dpi=300,fig.align = "center"}
 
@@ -104,7 +104,7 @@ table <- sa_atl_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiomet
 table$subregion <- factor(table$subregion,levels=c('BR[NE]','BR[S]','ARG[NE]-UY','ARG[SE]'))
 
 table%>%arrange(subregion)%>% knitr::kable(caption = "South America Atlantic coast - Number of SLIP by region",
-                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
+                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 ```
 
@@ -193,7 +193,7 @@ if (file.exists(gia_atlantic_file)) {
 
 ### SLIP Point cloud and GIA model values
 
-Before the comparison of SLIP and GIA models, the individual elements were extracted for each region.  Figure \@ref(fig:south-america-atlantic-gia-plot) shows SLIP after extraction (sampling) as clouds of points grouped by area (horizontal) from north to south and type of sampling ('No peak sampling' and 'Peak sampling'). Differences between the sampling techniques are evident in the Brazilian (South) region. In this area, the SLIPs point cloud locates around particular age ranges. This effect of the sampling method is also visible in the other areas with different intensities. The average value (lines) and standard deviation (shaded area) of each of the 216 GIA model configurations by region are included in the graph (lines). For the four areas, the models show similar patterns during the last 200 ka. For example, the models exhibit relatively high variation between 200 and 130 ka compared to the 130 to 0 ka period. As the main difference, the areas located in Argentina and Uruguay (ARG[NE]-UY - ARG[SE]) have lower relative sea-level values between 160 and 130 ka than the Brazilian areas (BR[NE] and BR[S]).
+Before comparing SLIP and GIA models, the individual elements were extracted for each region. Figure \@ref(fig:south-america-atlantic-gia-plot) shows SLIP after extraction (sampling) as clouds of points grouped by area (horizontal) from north to south and type of sampling ('No peak sampling' and 'Peak sampling'). Differences between the sampling techniques are evident in the Brazilian (South) region. In this area, the SLIPs point cloud locates around particular age ranges. This effect of the sampling method is also visible in the other areas with different intensities. The average value (lines) and standard deviation (shaded area) of each of the 216 GIA model configurations by region are included in the graph (lines). The models show similar patterns during the last 200 ka for the four areas. For example, the models exhibit relatively high variation between 200 and 130 ka compared to the 130 to 0 ka period. As the main difference, the areas located in Argentina and Uruguay (ARG[NE]-UY - ARG[SE]) have lower relative sea-level values between 160 and 130 ka than the Brazilian areas (BR[NE] and BR[S]).
 
 ```{r south-america-atlantic-gia-plot, fig.cap= 'South American Atlantic coast SLIP and GIA. Lines correspond to GIA models and points (Point cloud) to sea-level indicators resulting from SLIP sampling.',fig.scap= 'South American Atlantic coast - GIA models and SLIP point cloud', echo=FALSE, warnings=FALSE, message= FALSE, results='hide', dpi=300, cache=TRUE, out.width = '90%',fig.align = 'center',cache=TRUE}
 
@@ -230,7 +230,7 @@ ggplot()+geom_ribbon(data=gia_values_atlantic,aes(x=time, y=mean, ymin=mean-sd,y
 
 ### Residual values
 
-Comparison between SLIP (Point cloud) and GIA models resulted in residual values for these regions. Figure \@ref(fig:sa-atlantic-residual-plot) shows the fitted curves of residual values in high-density temporal ranges (i.e., more than 15% of highest age density) by area and sampling method. As the main difference between the sampling methods, residuals from peak sampling for uniform age distributions result in temporal ranges where no calculation of residual value is possible. However, for age ranges where both techniques have information, the residual levels and tendencies are similar. On the Brazilian northeast coast (BR[NE]), both sampling methods result in a rapid increase of residual values from 125 to 110 ka. For Brazil (South) and Argentina (North)/Uruguay areas, residual values around 125 ka are lower (around 0-15m) than the levels at 100 and 80 ka (25-30m). The southeast Argentinian area is the only area with residual values (high density) before 125 ka. This area shows an initial residual increase (up to 150 m around 160 to 150 ka) and a posterior decrease to 0 m (around 125 ka). Similarly, this area is the only one that shows information (peak sampling) for the period around 50 ka with high residual levels between 60 and 90 m. 
+Comparison between SLIP (Point cloud) and GIA models resulted in residual values for these regions. Figure \@ref(fig:sa-atlantic-residual-plot) shows the fitted curves of residual values in high-density temporal ranges (i.e., more than 15% of highest age density) by area and sampling method. As the main difference between the sampling methods, residuals from peak sampling for uniform age distributions result in temporal ranges where no calculation of residual value is possible. However, the residual levels and tendencies are similar for age ranges where both techniques have information. Both sampling methods on the Brazilian northeast coast (BR[NE]) result in a rapid increase of residual values from 125 to 110 ka. For Brazil (South) and Argentina (North)/Uruguay areas, residual values around 125 ka are lower (around 0-15m) than the levels at 100 and 80 ka (25-30m). The southeast Argentinian area is the only area with residual values (high density) before 140 ka. This area shows an initial residual increase (up to 150 m around 160 to 150 ka) and a posterior decrease to 0 m (around 125 ka). Similarly, this area is the only one that shows information (peak sampling) for the period around 50 ka with high residual levels between 60 and 90 m. 
 
 ```{r sa-atlantic-residual-plot, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, results='hide',dpi=300,cache=TRUE,out.width = "100%",fig.align = "center", fig.cap= 'South American Atlantic coast. Residual values by region and sampling method. Solid line correspond to fitted line. Bins represent number of points (point cloud) by age and residual value. ',fig.scap= 'South American Atlantic coast - Residual values'}
 
@@ -243,13 +243,13 @@ res_combined_sa_atl_200 <- bind_rows(res_hdar_sa_atl_200,res_hdar_sa_atl_200_np)
 res_combined_sa_atl_200$region <- factor(res_combined_sa_atl_200$region,levels=regions_names)
 
 # Plot results
-ggplot(res_combined_sa_atl_200,aes(age,residual,region,group=code,color=region))+geom_bin2d()+scale_fill_viridis_c(trans='log10',option='magma',alpha=0.5)+geom_smooth(aes(group=code,color=region),level=0.95) + xlim(200,0)+scale_color_manual(values=group.colors.atlantic)+facet_grid(region~type)+theme_bw()+theme(panel.spacing = unit(.03, "lines"))+labs(colour='Region')+xlab('Age (ka)')+ylab('Residual (m)')
+ggplot(res_combined_sa_atl_200,aes(age,residual,region,group=code,color=region))+geom_bin2d(inherit.aes = F,aes(age,residual))+scale_fill_viridis_c(trans='log10',option='magma',alpha=0.5)+geom_smooth(aes(group=code,color=region),level=0.95)+scale_color_manual(values=group.colors.atlantic)+scale_x_reverse(n.breaks = 10,limits=c(200,0))+facet_grid(region~type)+theme_bw()+theme(panel.spacing = unit(.03, "lines"),axis.text.x = element_text(angle = 90))+labs(colour='Region')+xlab('Age (ka)')+ylab('Residual (m)')
 
 ```
 
 ### Evaluation
 
-Residual values partially result from the random selection of GIA models that have a particular configuration of parameters. For that reason, the comparison of residual values by their grouping parameters (e.g., lower mantle viscosity) could provide indications of residual values differences due to GIA models parameters. Figure \@ref(fig:sa-atlantic-mean-plot) shows the mean residual values by model parameters (A to E) and by sampling method (F). Comparison between different grouping parameters (A to E) using the same sampling methods shows a similar distribution of mean values. However, the residual values form three distinct groups that do not correspond to differences in the model parameters. As a general observation, residual values tend to be higher for residuals using 'no-peak' sampling for all the model parameters (See Figure \@ref(fig:sa-atlantic-mean-plot).F). That is confirmed by a Kruskal test with a P-value lower than 0.05 testing the $H_{0}$ hypothesis that the mean values are equal.
+Residual values partially result from the random selection of GIA models that have a particular configuration of parameters. For that reason, the comparison of residual values by their grouping parameters (e.g., lower mantle viscosity) could provide indications of residual values differences due to GIA models parameters. Figure \@ref(fig:sa-atlantic-mean-plot) shows the mean residual values by model parameters (A to E) and by sampling method (F). Comparison between different grouping parameters (A to E) using the same sampling methods shows a similar distribution of mean values. However, the residual values form three distinct groups that do not correspond to differences in the model parameters. As a general observation, residual values tend to be higher for residuals using 'no-peak' sampling for all the model parameters (see Figure \@ref(fig:sa-atlantic-mean-plot).F). A Kruskal test with a P-value lower than 0.05 rejecting the $H_{0}$ hypothesis that the central tendency between sampling techniques is equal supports this observation.
 
 ```{r sa-atlantic-mean-plot, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, results='hide',dpi=300,cache=TRUE, out.width='100%',fig.height = 8,fig.width=9,fig.align = "center",fig.cap= 'South American Atlantic coast mean residual values by model parameters and sampling method.',fig.scap= 'South American Atlantic coast - Mean residual values by grouping parameters'}
 
@@ -280,7 +280,7 @@ figure <- ggarrange(fig_1, fig_2, fig_3,fig_4,fig_5,fig_6,
 figure
 
 ```
-Additional Kruskal tests were applied to identify if differences in mean residual ($\mu_{\varepsilon}$) values result from different GIA model parameters (See Table \@ref(tab:sa-atlantic-kruskal)). The residual values groups also include their geographic area and specific model (combination of all parameters). The $H_{0}$ hypothesis for all tests is that the mean value of all parameters is the same. For example, for the Propagation parameter, $H_{0}$ is that $\mu_{\varepsilon(Wael-S)}$ is equal to $\mu_{\varepsilon(Wael-P)}$. $H_{1}$ for all cases is that mean values are different. Table \@ref(tab:sa-atlantic-kruskal) shows that for the 'no peak' sampling, almost all model parameters (except Propagation), region, and specific model test, result in a P-value lower than 0.05 rejecting $H_{0}$ (P-values lower than 0.05 in **bold**). Similarly, for the cases using the peak sampling method, $H_{0}$ is rejected for most model parameters (except Upper mantle viscosity), region, and specific model. 
+Additional Kruskal tests were applied to identify if differences in the central tendency of the residual values between different groups result from different GIA model parameters (see Table \@ref(tab:sa-atlantic-kruskal)). The residual values groups also include their geographic area and specific model (combination of all parameters). The $H_{0}$ hypothesis for all tests is that the central tendency of all parameters is the same. Table \@ref(tab:sa-atlantic-kruskal) shows that for the 'no peak' sampling, almost all model parameters (except Propagation), region, and specific model, result in a P-value lower than 0.05 rejecting $H_{0}$ (P-values lower than 0.05 in **bold**). Similarly, for the cases using the peak sampling method, $H_{0}$ is rejected for most model parameters (except Upper mantle viscosity), region, and specific model. 
 
 ```{r sa-atlantic-kruskal, echo = FALSE, message = FALSE, warning=FALSE, cache=TRUE}
 
@@ -327,23 +327,27 @@ sa_atl_kt <- data.frame(parameter=param_names,df = unlist(lapply(kt_sa_atl_np, '
 #Highlight significant P-value
 
 pv_np <- sa_atl_kt$p_value_np<0.05
+pv_np_min <- sa_atl_kt$p_value_np<0.001
 h_pv_np <- pv_np
 h_pv_np<- replace(h_pv_np,pv_np,'#e6ffe6')
 h_pv_np <- replace(h_pv_np,!pv_np,'white')
 
 pv_ps<- sa_atl_kt$p_value_ps<0.05
+pv_ps_min <- sa_atl_kt$p_value_ps<0.001
 h_pv_ps <- pv_ps
 h_pv_ps <- replace(h_pv_ps,h_pv_ps,'#e6ffe6')
 h_pv_ps <- replace(h_pv_ps,!pv_ps,'white')
 
-sa_atl_kt$p_value_np <- scientific(sa_atl_kt$p_value_np,digits = 3) 
-sa_atl_kt$p_value_ps <- scientific(sa_atl_kt$p_value_ps,digits = 3) 
+sa_atl_kt <- sa_atl_kt %>% mutate_at(vars(p_value_np, p_value_ps), list(~ formatC(., digits=3)))
+  
+sa_atl_kt$p_value_np[pv_np_min] <- 'P<0.001'
+sa_atl_kt$p_value_ps[pv_ps_min] <- 'P<0.001'
 
-sa_atl_kt%>% knitr::kable(caption = "South America Atlantic coast - Kruskal test",
-                           col.names = c('Parameter','Degrees of freedom','$\\tilde{\\chi}^2$','P-value','$\\tilde{\\chi}^2$','P-value'), escape = FALSE, booktabs=T, digits = 1) %>% column_spec(4, bold = pv_np)%>%column_spec(6, bold = pv_ps)%>%add_header_above(c(" "=2, "No peak sampling" = 2, "Peak sampling" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
+sa_atl_kt%>%  knitr::kable(caption = "South America Atlantic coast - Kruskal test",
+                           col.names = c('Parameter','Degrees of freedom','$\\tilde{\\chi}^2$','P-value','$\\tilde{\\chi}^2$','P-value'), escape = FALSE, booktabs=T, digits = 1) %>% column_spec(4, bold = pv_np)%>%column_spec(6, bold = pv_ps)%>%add_header_above(c(" "=2, "No peak sampling" = 2, "Peak sampling" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 ```
-To assess the indications from the Kruskal test that mean values by parameters, region, and specific models are not the same, a Pair-Wise Wilcox test was performed to determine the parameters configuration with different mean residual values ($\mu_{\varepsilon}$). Table \@ref(tab:sa-atlantic-wilcox-table) shows total possible combinations (Pairs) for each grouping parameter. For example, as Propagation only have two parameters (i.e., $Wael_S$ and $Wael_T$), there is only one possible pair. Table \@ref(tab:sa-atlantic-wilcox-table) shows how many of those pairs have statistically significant differences (P-value < 0.05) for their mean values according to the Wilcox test. As the main result, all pairs of regions have statistically significant differences for both sampling techniques. For the 'No-peaks' sampling, the lower-mantle viscosity, Upper-mantle viscosity, and Lithospheric thickness grouping parameters also have residual values that are consistently different between the different parameter values. However, different results are obtained for the 'Peak sampling' method, where the Propagation and Lithospheric thickness parameters have consistent differences. Similarly, from the 23.220 possible pairs of models, only 7 and 1 have statistically significant differences in their mean values for the no-peak and peak sampling methods.
+A pair-wise Wilcox test was performed to determine the parameters configuration with different central tendencies for the residual values following the indications from the Kruskal test results that they differ by parameters, region, and specific models. Table \@ref(tab:sa-atlantic-wilcox-table) shows total possible combinations (Pairs) for each grouping parameter. For example, as Propagation only have two parameters (i.e., $Wael_S$ and $Wael_T$), there is only one possible pair. Table \@ref(tab:sa-atlantic-wilcox-table) shows how many of those pairs have statistically significant differences (P-value < 0.05) in their central tendency according to the Wilcoxon test. As the main result, all pairs of regions have statistically significant differences for both sampling techniques. For the 'No-peaks' sampling, the lower-mantle viscosity, Upper-mantle viscosity, and Lithospheric thickness grouping parameters also have residual values that are consistently different between the different parameter values. However, different results are obtained for the 'Peak sampling' method, where the Propagation and Lithospheric thickness parameters have consistent differences. Similarly, from the 23.220 possible pairs of models, only 7 and 1 have statistically significant differences in their central tendency for the no-peak and peak sampling methods.
 
 ```{r sa-atlantic-wilcox-processing, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, cache=TRUE}
 
@@ -372,8 +376,7 @@ sa_atl_pairwise_wilcox <- data.frame(parameter = param_names,
                                      )
 
 sa_atl_pairwise_wilcox%>% knitr::kable(caption = "South America Atlantic coast - Pairwise Wilcox test",
-                           col.names = c('Grouping parameter','Number of pairs','Significant different pairs','Significant different pairs'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Normal sampling" = 1, "Peak sampling" = 1)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
-
+                           col.names = c('Grouping parameter','Number of pairs','Significant different pairs','Significant different pairs'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "No peak sampling" = 1, "Peak sampling" = 1)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 ```
 
@@ -388,13 +391,13 @@ fig_region
 
 ```
 
-Figure \@ref(fig:south-america-atlantic-mean-region) shows the residual mean values grouped by region. As suggested by the Kruskal tests, residual mean values between different sampling techniques are different, showing lower values for the 'peak sampling' method if grouped by regions. Both sampling techniques show similar trends concerning the relative order between sub-regions. From north to south, the Brazilian northeast coast (BR[NE]) shows the smallest residual values, followed by the Brazilian south coast (BR[S]), the Argentinian (North-East)/Uruguay (ARG[NE]-UY), and the Argentinian southeast (ARG[SE]) with higher mean residual values.
+Mean residual values grouped by region are shown in Figure \@ref(fig:south-america-atlantic-mean-region). The Kruskal tests suggest that the residual central tendency between different sampling techniques is different, showing lower mean values for the 'peak sampling' method if grouped by regions. Both sampling techniques show similar trends concerning the relative order between sub-regions. From north to south, the Brazilian northeast coast (BR[NE]) shows the smallest residual values, followed by the Brazilian south coast (BR[S]), the Argentinian (North-East)/Uruguay (ARG[NE]-UY), and the Argentinian southeast (ARG[SE]) with higher mean residual values.
 
 ## South American Pacific coast (1ºN-40ºS)
 
 ### Area of study
 
-The proposed comparison methodology was tested in an active tectonic margin along four different regions in the pacific coast of South American (See Figure \@ref(fig:area-of-study-south-america-pacific)). These areas correspond to the Ecuadorian and northern Peruvian coast (Ecuador-Peru[n]), the central and southern Peruvian coast (Peru[C-S]), the northern (Chile[N]), and central (Chile[C]) Chilean coast. There are 2150 sea-level index points (type of data point) for the whole area of study. More than 80% of SLIP in this region have as their age calculation origin a designated MIS uniform temporal constraint (See Table \@ref(tab:sa-pacific-num-slip)). The selected areas division corresponds to the four sectors proposed by @Freisleben2021 based on the main geomorphic characteristics of the Pacific coast of South America.
+The proposed comparison methodology was tested in an active tectonic margin along four different regions in the pacific coast of South American (see Figure \@ref(fig:area-of-study-south-america-pacific)). These areas correspond to the Ecuadorian and northern Peruvian coast (Ecuador-Peru[n]), the central and southern Peruvian coast (Peru[C-S]), the northern (Chile[N]), and central (Chile[C]) Chilean coast. There are 2150 sea-level index points (type of data point) for the whole area of study. The selected sea-level index points include indicators included in the recompilation of @Freisleben2021 and @Thompson2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 43 different publications in three different languages (English, Spanish, French) since 1977 in this region. More than 80% of SLIP in this region have a designated MIS uniform temporal constraint (see Table \@ref(tab:sa-pacific-num-slip)). The selected areas division corresponds to the four sectors proposed by @Freisleben2021 based on the main geomorphic characteristics of the Pacific coast of South America.
 
 ```{r area-of-study-south-america-pacific, fig.cap= 'South American Pacific coast.',fig.scap='South American Pacific coast - Regions and sea-level indicators location.', echo = FALSE, message =FALSE,error=FALSE,warning=FALSE,results='hide', out.width = "40%",dpi=300,fig.align = "center"}
 
@@ -434,7 +437,7 @@ table <- sa_pac_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiomet
 table$subregion <- factor(table$subregion,levels=c('Ecuador-Peru[N]','Peru[C-S]','Chile[N]','Chile[C]'))
 
 table%>%arrange(subregion)%>% knitr::kable(caption = "South America Pacific coast - Number of SLIP by region",
-                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
+                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 
 ```
@@ -560,11 +563,11 @@ ggplot()+geom_ribbon(data=gia_pacific,aes(x=time, y=mean, ymin=mean-sd,ymax=mean
 ```
 
 
-Figure \@ref(fig:south-america-pacific-gia-plot) shows the extraction of GIA models values (Lines) and SLIP sampling (Point cloud) previous to the comparison. As for the South American Atlantic coast, GIA models in the Pacific coast have a similar trend with high variability of relative sea-level between 200 and 130 ka and low variability between 130 and 0 ka. However, the Ecuadorian and northern Peruvian regions (Ecuador-Peru[N]) show higher variability in the 130 to 0 ka period. Point clouds of SLIP show differences in the temporal extent of the information between groups. In specific, the Peruvian central and south areas (Peru [C-S]) only have residual values between 130 and 110 ka, while other regions cover longer periods (e.g., Chile[N] covers from 160 ka to 75 ka). Differences in the SLIP cloud points due to the sampling methods are noticeable in all regions. For example, the peak sampling for the northern Chilean area (Chile[N]) shows up to seven clearly defined Point cloud clusters, while the 'no-peak' sampling method results in a more extended Point cloud. Regarding SLIP relative sea-level values, the central Chilean region (Chile[C]) shows for some periods values up to 200 meters while other regions' maximum values range between 60 and 110 m.
+Figure \@ref(fig:south-america-pacific-gia-plot) shows the extraction of GIA models values (Lines) and SLIP sampling (Point cloud) previous to the comparison. As for the South American Atlantic coast, GIA models in the Pacific coast have a similar trend with high variability of relative sea level between 200 and 130 ka and low variability between 130 and 0 ka. However, the Ecuadorian and northern Peruvian regions (Ecuador-Peru[N]) show higher variability in the 130 to 0 ka period. Point clouds of SLIP show differences in the temporal extent of the information between groups. In specific, the Peruvian central and south areas (Peru [C-S]) only have residual values between 130 and 110 ka, while other regions cover more extended periods (e.g., Chile[N] covers from 160 ka to 75 ka). Due to the sampling methods, differences in the SLIP cloud points are noticeable in all regions. For example, the peak sampling for the northern Chilean area (Chile[N]) shows up to seven clearly defined Point cloud clusters, while the 'no-peak' sampling method results in a more extended Point cloud. Regarding SLIP relative sea-level values, the central Chilean region (Chile[C]) shows values up to 200 meters for some periods while other regions' maximum values range between 60 and 110 m.
 
 ### Residual values
 
-The proposed comparison methodology between SLIP and GIA models resulted in residual values for the South American Pacific coast. Figure \@ref(fig:sa-pacific-residual-plot) shows the fitted residual curves in high-density temporal ranges. As for the Atlantic coast, the difference in the sampling methods results in temporal ranges where no comparison is possible. However, for the periods where both sampling techniques have residual values, all regions show similar trends for the *No peak sampling* and *Peak sampling*. On the Ecuadorian and north Peruvian coast (Ecuador-Peru[N]), both sampling methods result in residual values of around 25 and 50 m at 125 ka with an increase up to 80 m at 110 ka. The Peruvian central and south coast (Peru[C-S]) shows a residual level of approximately 50 m at 125 ka. Both the northern Chilean  (Chile[N]) and central (Chile[C]) coast show higher residual values up to 170 m at 140 ka, with a posterior descent to 40 m around 125 ka. Similarly, both regions show residual levels around 50 m at 100 ka and 60 m around 80 ka.
+The proposed comparison methodology between SLIP and GIA models resulted in residual values for the South American Pacific coast. Figure \@ref(fig:sa-pacific-residual-plot) shows the fitted residual curves in high-density temporal ranges. As for the Atlantic coast, the difference in the sampling methods results in temporal ranges where no comparison is possible. However, for the periods where both sampling techniques have residual values, all regions show similar trends for the *No peak sampling* and *Peak sampling*. On the Ecuadorian and north Peruvian coast (Ecuador-Peru[N]), both sampling methods result in residual values of around 25 and 40 m at 125 ka, increasing to 80 m at 110 ka. The Peruvian central and south coast (Peru[C-S]) shows a residual level of approximately 50 m at 125 ka. Both the northern Chilean  (Chile[N]) and central (Chile[C]) coast show higher residual values up to 170 m at 140 ka, with a posterior descent to 40 m around 125 ka. Similarly, both regions show residual levels around 50 m at 100 ka and 60 m around 80 ka.
 
 ```{r sa-pacific-residual-plot, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, results='hide',dpi=300,cache=TRUE,out.width = "100%",fig.align = "center", fig.cap= 'South American Pacific coast. Residual values by region and sampling method. Solid line correspond to fitted line. Bins represent number of points (point cloud) by age and residual value. ',fig.scap= 'South American Pacific coast - Residual values'}
 
@@ -577,14 +580,13 @@ res_combined_sa_pac_200 <- bind_rows(res_hdar_sa_pac_200,res_hdar_sa_pac_200_np)
 res_combined_sa_pac_200$region <- factor(res_combined_sa_pac_200$region,levels=regions_names)
 
 # Plot results
-ggplot(res_combined_sa_pac_200,aes(age,residual,region,group=code,color=region))+geom_bin2d(linetype='blank')+scale_fill_viridis_c(trans='log10',option='magma',alpha=0.4)+geom_smooth(aes(group=code,color=region),level=0.95) + xlim(200,0)+scale_color_manual(values=group.colors.pacific)+facet_grid(region~type)+theme_bw()+theme(panel.spacing = unit(.03, "lines"))+xlab('Age (ka)')+ylab('Residual (m)')+labs(colour='Region')
-
+ggplot(res_combined_sa_pac_200,aes(age,residual,region,group=code,color=region))+geom_bin2d(inherit.aes = F,aes(age,residual))+scale_fill_viridis_c(trans='log10',option='magma',alpha=0.5)+geom_smooth(aes(group=code,color=region),level=0.95)+scale_color_manual(values=group.colors.pacific)+scale_x_reverse(n.breaks = 10,limits=c(200,0))+facet_grid(region~type)+theme_bw()+theme(panel.spacing = unit(.03, "lines"),axis.text.x = element_text(angle = 90))+labs(colour='Region')+xlab('Age (ka)')+ylab('Residual (m)')
 ```
 
 ### Evaluation
 
-Figure \@ref(fig:sa-pacific-mean-plot) shows the mean residual values by model parameters (A to E) and by sampling method (F). Comparison between different grouping parameters (A to E) using the same sampling methods shows a similar distribution of mean values except for the Propagation parameter, where the difference is notable. As for the Atlantic coast, residual values tend to be higher for residuals using 'no-peak' sampling for all the model parameters (See Figure \@ref(fig:sa-atlantic-mean-plot))
-That is confirmed by a Kruskal test with a P-value lower than 0.05 testing the $H_{0}$ hypothesis that the mean values between sampling techniques are equal.
+Figure \@ref(fig:sa-pacific-mean-plot) shows the mean residual values by model parameters (A to E) and by sampling method (F). Comparison between different grouping parameters (A to E) using the same sampling methods shows a similar distribution of mean values except for the Propagation parameter, where the difference is notable. As for the Atlantic coast, residual values tend to be higher for residuals using 'no-peak' sampling for all the model parameters (see Figure \@ref(fig:sa-atlantic-mean-plot)). 
+A Kruskal test with a P-value lower than 0.05 testing the $H_{0}$ hypothesis shows that there are differences in the central tendency values between sampling techniques.
 
 ```{r sa-pacific-mean-plot, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, results='hide',dpi=300,cache=TRUE, out.width='100%',fig.height = 8,fig.width=9,fig.align = "center",fig.cap= 'South American Pacific coast mean residual values by model parameters and sampling method.',fig.scap= 'South American Pacific coast - Mean residual values by grouping parameters'}
 
@@ -611,7 +613,7 @@ figure
 
 ```
 
-Additional Kruskal tests were applied to identify differences in mean residual values resulting from different GIA model parameters, their geographic area, and specific GIA model configuration (See Table \@ref(tab:sa-atlantic-kruskal)). The $H_{0}$ hypothesis for all tests is that the mean value of all parameters is the same. $H_{1}$ for all cases is that mean values are different. Table \@ref(tab:sa-pacific-kruskal) shows that for all cases the null hypothesis  $H_{0}$ is rejected using a P-value of 0.05 (P-values lower than 0.05 in **bold**). 
+Additional Kruskal tests were applied to identify differences in mean residual values resulting from different GIA model parameters, their geographic area, and specific GIA model configuration (see Table \@ref(tab:sa-atlantic-kruskal)). The $H_{0}$ hypothesis for all tests is that the central tendency of all parameters is the same. $H_{1}$ for all cases is that central tendencies are different. Table \@ref(tab:sa-pacific-kruskal) shows that for all cases the null hypothesis  $H_{0}$ is rejected using a P-value of 0.05 (P-values lower than 0.05 in **bold**). 
 
 ```{r sa-pacific-kruskal, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -659,27 +661,32 @@ sa_pac_kt <- data.frame(parameter=param_names,df = unlist(lapply(kt_sa_pac_np, '
 
 #Highlight significant P-value
 
+sa_atl_kt$p_value_np[pv_np_min] <- 'P<0.001'
+sa_atl_kt$p_value_ps[pv_ps_min] <- 'P<0.001'
+
 pv_np <- sa_pac_kt$p_value_np<0.05
+pv_np_min <- sa_pac_kt$p_value_np<0.001
 h_pv_np <- pv_np
 h_pv_np<- replace(h_pv_np,pv_np,'#e6ffe6')
 h_pv_np <- replace(h_pv_np,!pv_np,'white')
 
 pv_ps<- sa_pac_kt$p_value_ps<0.05
+pv_ps_min <- sa_pac_kt$p_value_ps<0.001
 h_pv_ps <- pv_ps
 h_pv_ps <- replace(h_pv_ps,h_pv_ps,'#e6ffe6')
 h_pv_ps <- replace(h_pv_ps,!pv_ps,'white')
 
-
-sa_pac_kt$p_value_np <- scientific(sa_pac_kt$p_value_np,digits = 3) 
-sa_pac_kt$p_value_ps <- scientific(sa_pac_kt$p_value_ps,digits = 3) 
+sa_pac_kt <- sa_pac_kt %>% mutate_at(vars(p_value_np, p_value_ps), list(~ formatC(., digits=3)))
+  
+sa_pac_kt$p_value_np[pv_np_min] <- 'P<0.001'
+sa_pac_kt$p_value_ps[pv_ps_min] <- 'P<0.001'
 
 sa_pac_kt%>% knitr::kable(caption = "South America Pacific coast - Kruskal test",
-                           col.names = c('Parameter','Degrees of freedom','$\\tilde{\\chi}^2$','P-value','$\\tilde{\\chi}^2$','P-value'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "No peak sampling" = 2, "Peak sampling" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))%>% column_spec(4, bold = pv_np)%>%column_spec(6, bold = pv_ps)
+                           col.names = c('Parameter','Degrees of freedom','$\\tilde{\\chi}^2$','P-value','$\\tilde{\\chi}^2$','P-value'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "No peak sampling" = 2, "Peak sampling" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))%>% column_spec(4, bold = pv_np)%>%column_spec(6, bold = pv_ps)
 
 ```
 
-
-A Pair-Wise Wilcox test was performed to identify the parameters, regions, or specific model that produces significantly different residual results. Table \@ref(tab:sa-pacific-wilcox-table) shows the total of possible combinations (Pairs) for each grouping parameter and the number of pairs with statistically significant differences (P-value < 0.05) for their mean values. As the main result, all combinations of regions have statistically significant differences for both sampling techniques. Similarly, all model parameters (except Lower mantle viscosity) have a high proportion of pairs (more than 50%) with significant differences in their mean values. Lastly, the pair-wise tests show that for both the *No-peak* and *Peak sampling*,  there is an important proportion of significantly different pairs of residual values by model (Around 30 to 52%). That suggests that some models result in consistently different residual values. 
+A Pair-Wise Wilcoxon test was performed to identify the parameters, regions, or specific model that produces significantly different residual results. Table \@ref(tab:sa-pacific-wilcox-table) shows the total of possible combinations (Pairs) for each grouping parameter and the number of pairs with statistically significant differences (P-value < 0.05) for their central tendencies. As the main result, all combinations of regions have statistically significant differences for both sampling techniques. Similarly, all model parameters (except Lower mantle viscosity) have a high proportion of pairs (more than 50%) with significant differences in their central tendencies. Lastly, the pair-wise tests show that for both the *No-peak* and *Peak sampling*,  there is an important proportion of significantly different pairs of residual values by models (30% for 'no-peak' and 52% to 'peak-sampling'). That suggests that some models result in consistently different residual values. 
 
 ```{r sa-pacific-wilcox-processing, echo = FALSE, message = FALSE, warning=FALSE, cache=TRUE}
 
@@ -729,7 +736,7 @@ view(res_hdar_sa_pac_200%>%group_by(model)%>%summarise(mean=mean(residual)))
 
 ```
 
-As suggested by the Kruskal tests, residual mean values for different regions are different. Figure \@ref(fig:south-america-pacific-mean-region) shows the residual mean values grouped by region and sampling technique. As for the other grouping parameters, mean residual values from 'Peak-sampling' are in all cases lower than the ones resulting from 'No-peak' sampling. For both sampling methods, the Ecuadorian and northern Peruvian coast (Ecuador-Peru[N]), the central Peruvian (Peru[C-S]), and the north Chilean coast (Chile[N]) coincide in their relative position. That is with Chile[N] as the one with the highest mean residual values, followed by the Ecuador-Peru[N] and the Peru[C-S] area. However, the central Chilean region shows changes. This region varies from being the one with the second-highest mean values (around 60m) for the *No-peak sampling* to being the one with lowest mean values for the *peak sampling* technique.
+As suggested by the Kruskal tests, central tendencies for different regions are different. Figure \@ref(fig:south-america-pacific-mean-region) shows the residual mean values grouped by region and sampling technique. As for the other grouping parameters, mean residual values from 'Peak-sampling' are in all cases lower than the ones resulting from 'No-peak' sampling. For both sampling methods, the Ecuadorian and northern Peruvian coast (Ecuador-Peru[N]), the central Peruvian (Peru[C-S]), and the north Chilean coast (Chile[N]) coincide in their relative position. That is with Chile[N] as the one with the highest mean residual values, followed by the Ecuador-Peru[N] and the Peru[C-S] area. However, the central Chilean region shows changes. This region varies from the one with the second-highest mean values (around 60m) for the *No-peak sampling* to the one with the lowest mean values for the *peak sampling* technique.
 
 ```{r south-america-pacific-mean-region, eval=TRUE, echo=FALSE, warnings=FALSE, message= FALSE, results='hide',dpi=300,cache=TRUE,out.width = "90%",fig.height = 8,fig.width=10, fig.align = "center", fig.cap= 'South American Pacific coast mean residual values by region.',fig.scap= 'South American Pacific coast - Mean residual values by region'}
 
