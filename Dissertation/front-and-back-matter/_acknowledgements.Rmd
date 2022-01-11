@@ -1,4 +1,6 @@
-To do
+I want to thank different people that supported different stages of this project. Thanks to my supervisors, Prof. Rovere, and Prof. Pebesma, for their comments and guidance during the project. Special thanks to Prof. Rovere for his guidance in the process of exploring sea-level research as a field during the last year. Thanks to Prof. Verstegen, Prof. Kray, and Daniel Nüst for their dedication in their classes and projects at IFGI, which allowed me to learn and implement different ideas to this project. Thanks to Dr. Jackqueline Austerman from Columbia University for sharing the GIA model output. Thanks to Eeva Langeveld for her valuable comments on the final manuscript. 
+
+The data used in this study was extracted from WALIS, a sea-level database interface developed by the ERC Starting Grant “WARMCOASTS” (ERC-StG-802414), in collaboration with PALSEA (PAGES / INQUA) working group. The database structure was designed by A. Rovere, D. Ryan, T. Lorscheid, A. Dutton, P. Chutcharavan, D. Brill, N. Jankowski, D. Mueller, M. Bartz, E. Gowan, and K. Cohen.
 
 \begin{flushright}
 Juan Sebastian Garzón\\
