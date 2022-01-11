@@ -69,15 +69,15 @@ age_RSL_example <- extract_age(RSL_example,10000)
 total_dist <- age_RSL_example$distributions$total[,c('Type.of.datapoint','Age.calculation.from','Age_mu','Age_2s','Lower.age','Upper.age','prob')] 
 rownames(total_dist) <- c(1:nrow(total_dist))
 
-total_dist%>% knitr::kable(caption = "Extraction of age parameters for SLIP",
+total_dist%>% knitr::kable(caption = "Extraction of Age parameters for SLIPs",
                            col.names = c('Type of datapoint','Age calculation from', '$\\mu$','$2\\sigma$','Lower age','Upper age', 'Probability'), digits=2, escape = FALSE, booktabs=T) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
 ```
 
-Table \@ref(tab:age-nopeak) shows the resulting extraction of age parameters for Sea level indicator `r (unique(RSL_example$WALIS_ID)[1])` from `r (unique(RSL_example$Region)[1])`, `r (unique(RSL_example$Nation)[1])`. In this example, the SLI have more than one temporal constraint from different dating techniques (i.e., radiometric dating and MIS assignment).
+Table \@ref(tab:age-nopeak) shows the resulting extraction of Age parameters for Sea level indicator `r (unique(RSL_example$WALIS_ID)[1])` from `r (unique(RSL_example$Region)[1])`, `r (unique(RSL_example$Nation)[1])`. In this example, the SLI have more than one temporal constraint from different dating techniques (i.e., radiometric dating and MIS assignment).
 
 ##### Uniform distributions in peaks
 
-There is a variation in the extraction of age parameters for uniform distributions. This variation allows the extraction from only the age ranges that correspond to peaks (High stand) of sea level in the stack published by @Spratt2016stack (Figure \@ref(fig:stack-peaks)). This stack of sea-level variation during the last 800 ka comes from multiple proxies from ocean sediment core data. The peaks and their characteristics (e.g., width, initial, and endpoint) are determined using the `findpeaks()` functions from the `pracma` package [see @hanspracma].
+There is a variation in the extraction of Age parameters for uniform distributions. This variation allows the extraction from only the age ranges that correspond to peaks (High stand) of sea level in the stack published by @Spratt2016stack (Figure \@ref(fig:stack-peaks)). This stack of sea-level variation during the last 800 ka comes from multiple proxies from ocean sediment core data. The peaks and their characteristics (e.g., width, initial, and endpoint) are determined using the `findpeaks()` functions from the `pracma` package [see @hanspracma].
 
 An age range from peaks is defined by the width $W_{ap}$ of the range  (Initial $A_{Ip}$ and Endpoint of peak $A_{Ep}$), the age of peak maximum ($A_{Mp}$) and a factor ($f$) adjusting the width of the range. Given a peak with $A_{Ip} = 10$, $A_{Mp}= 20$, $A_{Ep}= 32$, and $f=0.1$ the range limits is define as:
 
@@ -143,7 +143,7 @@ age_RSL_example <- extract_age(RSL_example,10000, peaks = pr)
 total_dist <- age_RSL_example$distributions$total[,c('Type.of.datapoint','Age.calculation.from','Age_mu','Age_2s','Lower.age','Upper.age','prob')] 
 rownames(total_dist) <- c(1:nrow(total_dist))
 
-total_dist%>% knitr::kable(caption = "Extraction of age parameters for SLIP with uniform sampling around sea level peaks.",
+total_dist%>% knitr::kable(caption = "Extraction of Age parameters for SLIPs with uniform sampling around sea level peaks.",
                            col.names = c('Type of datapoint','Age calculation from', '$\\mu$','$2\\sigma$','Lower age','Upper age', 'Probability'), digits=2, escape = FALSE, booktabs=T) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 ```
 #### Relative sea level (RSL)
@@ -162,7 +162,7 @@ rsl_RSL_example <- extract_rsl(RSL_example_coral,10000)
 
 total_dist <- rsl_RSL_example$distribution$total[,c('Type.of.datapoint','RSL.Indicator','Upper.limit.of.living.range..m.','Lower.limit.of.living.range..m.','Elevation..m.','Elevation.error..m.','gamma.shape','gamma.rate','prob')] 
 rownames(total_dist) <- c(1:nrow(total_dist))
-total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for Single Corals",
+total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for single corals indicators",
                             digits=2, 
                             col.names= c('Type of datapoint','RSL Indicator','Upper limit $U_{1}$ (m) ','Upper limit $L_{1}$ (m)','Elevation (m)','Elevation error (m)','$\\alpha$','$\\beta$','Probability'), escape = FALSE, booktabs=T) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 ```
@@ -174,7 +174,7 @@ rsl_RSL_sli <- extract_rsl(RSL_example,10000)
 
 total_dist <- rsl_RSL_sli$distribution$total[,c('Type.of.datapoint','RSL.Indicator','Paleo.RSL..m.','Paleo.RSL.uncertainty..m.','prob')] 
 rownames(total_dist) <- c(1:nrow(total_dist))
-total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for Sea level indicators",
+total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for sea-level indicators",
                            digits=2,
                            col.names = c('Type of datapoint','RSL
                                          Indicator',' Paleo RSL $\\mu$','Palo RSL uncertainty $\\sigma$', 'Probability'),
@@ -202,7 +202,7 @@ rsl_limiting_example <- extract_rsl(limiting_example,10000)
 total_dist <- rsl_limiting_example$distribution$total[,c('Type.of.datapoint','RSL.Indicator','Paleo.RSL..m.','Paleo.RSL.uncertainty..m.')] 
 
 rownames(total_dist) <- c(1:nrow(total_dist))
-total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for sea -level indicators",
+total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for limiting indicators",
                            digits=2,
                            col.names = c('Type of datapoint','RSL
                                          Indicator',' Paleo RSL $\\mu$','Palo RSL uncertainty $\\sigma$'),
@@ -292,7 +292,7 @@ parameters %>%knitr::kable(caption = "GIA models parameters",
  
 ## Residual calculation
 
-To compute the residual ($\varepsilon$) value (see Equation \@ref(eq:residual-delta)), it is required to extract all SLIPs and GIA models from a selected area. As a first step, all sea-level indicators (i.e., Sea level index points and limiting indicators) are individually merged. After the merging and parameter extraction, only sea-level index points (SLIPs) are selected for sampling. Limiting indicators are omitted as unbounded RSL intervals complicate their integration. Second, from the selection of SLIPs, the *Age* and *RSL* values are sampled using their distribution parameters. All SLIPs are sampled by an equal number of points (usually 10.000), and their values are grouped into a single collection (point cloud). Each feature includes the WALIS_ID of origin, associating the random selection with a specific indicator. Third, the Age and RSL values ($\Delta RSL(\varphi,t)$) are sampled by a proportion of the point cloud size (e.g., 10% or 30%) and compared applying Equation \@ref(eq:residual-rsl-iso) with a random selection of one of the 216 GIA models. GIA models values are selected from the closest location to the SLI indicators. That means that each point is compared using a random model from the collection of nearest GIA models. As the *Age* parameter of the point clouds does not necessarily match the age parameter of GIA Models (0 to 400 Ka with 0.5 and 1.0 Ka spacing), values are linearly interpolated from the nearest lower and upper value. Figure \@ref(fig:residual) illustrates the sampling process for collecting Age and RSL 100.000 values with a GIA sampling proportion of 10%.
+To compute the residual ($\varepsilon$) value (see Equation \@ref(eq:residual-delta)), it is required to extract all SLIPs and GIA models from a selected area. As a first step, all sea-level indicators (i.e., Sea level index points and limiting indicators) are individually merged. After the merging and parameter extraction, only sea-level index points (SLIPs) are selected for sampling. Limiting indicators are omitted as unbounded RSL intervals complicate their integration. Second, from the selection of SLIPs, the *Age* and *RSL* values are sampled using their distribution parameters. All SLIPs are sampled by an equal number of points (usually 10.000), and their values are grouped into a single collection (point cloud). Each feature includes the WALIS_ID of origin, associating the random selection with a specific indicator. Third, the Age and RSL values ($\Delta RSL(\varphi,t)$) are sampled by a proportion of the point cloud size (e.g., 10% or 30%) and compared applying Equation \@ref(eq:residual-rsl-iso) with a random selection of one of the 216 GIA models. GIA models values are selected from the closest location to the SLI indicators. That means that each point is compared using a random model from the collection of nearest GIA models. As the *Age* parameter of the point clouds does not necessarily match the Age parameter of GIA Models (0 to 400 Ka with 0.5 and 1.0 Ka spacing), values are linearly interpolated from the nearest lower and upper value. Figure \@ref(fig:residual) illustrates the sampling process for collecting Age and RSL 100.000 values with a GIA sampling proportion of 10%.
 
 Code required to compare sea-level index points (SLIPs) cloud points and GIA models is available in the file `Methods\compare_sli_gia.R`.
 

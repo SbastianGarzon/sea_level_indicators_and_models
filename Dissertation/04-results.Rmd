@@ -103,7 +103,7 @@ table <- sa_atl_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiomet
 
 table$subregion <- factor(table$subregion,levels=c('BR[NE]','BR[S]','ARG[NE]-UY','ARG[SE]'))
 
-table%>%arrange(subregion)%>% knitr::kable(caption = "South America Atlantic coast - Number of SLIP by region",
+table%>%arrange(subregion)%>% knitr::kable(caption = "South America Atlantic coast - Number of SLIPs by region",
                            col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 ```
@@ -436,7 +436,7 @@ table <- sa_pac_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiomet
 
 table$subregion <- factor(table$subregion,levels=c('Ecuador-Peru[N]','Peru[C-S]','Chile[N]','Chile[C]'))
 
-table%>%arrange(subregion)%>% knitr::kable(caption = "South America Pacific coast - Number of SLIP by region",
+table%>%arrange(subregion)%>% knitr::kable(caption = "South America Pacific coast - Number of SLIPs by region",
                            col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 
