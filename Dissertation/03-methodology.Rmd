@@ -14,7 +14,7 @@ bibliography: references.bib
 
 # Methodology {#methodology}
 
-The proposed methodology for comparing sea-level indicators and sea-level models consists of algorithms to compute the difference between $RSL$ recorded by SLIs and the Glacial Isostatic Adjustment models ($\Delta ISO_{GIA}(\varphi,t)$). Due to their differences, SLI and limiting data points have different manipulations. In general terms, the methodology consists of random sampling in both age and RSL parameters for the SLI and then compute a Monte Carlo simulation process that randomly samples the GIA models and calculates the difference with SLI values. Following Equation \@ref(eq:rsl-process) and \@ref(eq:isogiafingerprint) the subtraction results in a residual ($\varepsilon$):
+The proposed methodology for comparing sea-level indicators and sea-level models consists of algorithms to compute the difference between $RSL$ recorded by SLIs and the glacial isostatic adjustment models ($\Delta ISO_{GIA}(\varphi,t)$). Due to their differences, SLI and limiting data points have different manipulations. In general terms, the methodology consists of random sampling in both age and RSL parameters for the SLI and then compute a Monte Carlo simulation process that randomly samples the GIA models and calculates the difference with SLI values. Following Equation \@ref(eq:rsl-process) and \@ref(eq:isogiafingerprint) the subtraction results in a residual ($\varepsilon$):
 
 \begin{equation}
 \small
@@ -134,7 +134,7 @@ Code required to extract peaks from the sea-level stack published by @Spratt2016
 
 As a uniform constraint could intersect more than one peak range, one uniform distribution from the initial age constraints could result in different smaller uniform distributions around sea-level peaks. In that case, the *peak ranges* (Figure \@ref(fig:stack-peaks)) replace the initial age constraints, and its probability $prob$ corresponds to the division by the number of *peak ranges* intersected. Table \@ref(tab:age-peaks) illustrates the parameter extraction for SLI `r (unique(RSL_example$WALIS_ID)[1])` [@cerrone2021] in which one of the initial age constraints intersects multiple *peak ranges*. For Age constraints that do not intersect any *peak range*, extraction parameters stay unmodified. Similarly, temporal constraints from radiometric ages stay unmodified (parameters and $prob$ value). Age extractions using this method are denominated as *Peak sampling* for future references in this text. An extraction of Age that keeps the original Uniform distribution parameters is called *No-peak sampling*.
 
-Code required to extract the Age parameter from sea level indicators is available in `Methods\extract_age.R`.
+Code required to extract the Age parameter from sea-level indicators is available in `Methods\extract_age.R`.
 
 ```{r age-peaks, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -188,11 +188,11 @@ Table \@ref(tab:rsl-sli) shows parameter extraction for *Sea Level Indicator*  `
 
 #### Age
 
-For limiting data (Marine and Terrestrial limiting), extraction of the Age parameter follows the same methodology as sea-level index points (SLIPs) described before.
+For limiting data (marine and terrestrial limiting), extraction of the Age parameter follows the same methodology as sea-level index points (SLIPs) described before.
 
 #### Relative sea level (RSL)
 
-For RSL, the parameter extraction identifies the indicator type (i.e., Marine and Terrestrial) and defines its limiting level and uncertainty of the measurement.
+For RSL, the parameter extraction identifies the indicator type (i.e., marine and terrestrial) and defines its limiting level and uncertainty of the measurement.
 
 ```{r limiting-rsl, echo = FALSE, message = FALSE, warning=FALSE}
 
@@ -202,7 +202,7 @@ rsl_limiting_example <- extract_rsl(limiting_example,10000)
 total_dist <- rsl_limiting_example$distribution$total[,c('Type.of.datapoint','RSL.Indicator','Paleo.RSL..m.','Paleo.RSL.uncertainty..m.')] 
 
 rownames(total_dist) <- c(1:nrow(total_dist))
-total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for Sea level indicators",
+total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for sea -level indicators",
                            digits=2,
                            col.names = c('Type of datapoint','RSL
                                          Indicator',' Paleo RSL $\\mu$','Palo RSL uncertainty $\\sigma$'),
@@ -214,7 +214,7 @@ Table \@ref(tab:limiting-rsl) shows parameter extraction for Sea Level Indicator
 
 ## Merging sea-level indicators
 
-After extraction of Age and RSL parameters, all constraints of individual Sea level indicators (SLI) are merged into a single Age and RSL constraint. The merging method and output type vary depending on the *Type of datapoint* (i.e., SLIP or limiting) of each SLI.
+After extraction of Age and RSL parameters, all constraints of individual sea-level indicators (SLI) are merged into a single Age and RSL constraint. The merging method and output type vary depending on the *Type of datapoint* (i.e., SLIP or limiting) of each SLI.
 
 ### Sea level index points merge
 
@@ -222,7 +222,7 @@ For both Age and RSL, the sea-level index points (SLIPs) merging results from ap
 
 Figure \@ref(fig:join-age-rsl) illustrates the differences in *Age* and *RSL* distributions between the same SLIP by applying the *No-peak sampling* and the *Peak sampling* method.
 
-```{r join-age-rsl, fig.cap= 'SLI sampling with two different Age sampling strategies',fig.scap='Sea level indicators sampling', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
+```{r join-age-rsl, fig.cap= 'SLI sampling with two different Age sampling strategies',fig.scap='Sea -level indicators sampling', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
 library(ggplot2)
 library(cowplot)
 library(gridExtra)
@@ -260,17 +260,17 @@ grid.arrange(plot1, plot2, legend, ncol=3, nrow = 1,
 
 ### Limiting indicators merge
 
-For Limiting indicators, Age and RLS parameters have different merging strategies.
+For limiting indicators, Age and RLS parameters have different merging strategies.
 
-For Age, Limiting indicators with only one temporal constraint are not sampled as SLIPs, but they inherit the original distribution parameters. In contrast, limiting indicators with more than one temporal constraint follow the same sampling procedure for SLIPs. For RSL, the merged constraint corresponds to the most informative limiting indicator. Figure \@ref(fig:limiting) illustrates the most informative indicator selection from a group of only Terrestrial or Marine Limiting indicators. There is no implementation for merging opposite indicators (e.g., one Terrestrial and one Marine limiting) as the WALIS database does not include examples of such a combination of limiting indicators. 
+For Age, limiting indicators with only one temporal constraint are not sampled as SLIPs, but they inherit the original distribution parameters. In contrast, limiting indicators with more than one temporal constraint follow the same sampling procedure for SLIPs. For RSL, the merged constraint corresponds to the most informative limiting indicator. Figure \@ref(fig:limiting) illustrates the most informative indicator selection from a group of only terrestrial or marine limiting indicators. There is no implementation for merging opposite indicators (e.g., one terrestrial and one marine limiting) as the WALIS database does not include examples of such a combination of limiting indicators. 
 
-```{r limiting, fig.cap= 'Merging of Terrestrial and Marine Limiting data. The most informative indicator for each group is selected.',fig.scap='Diagram of Limiting data merging', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
+```{r limiting, fig.cap= 'Merging of terrestrial and marine limiting data. The most informative indicator for each group is selected.',fig.scap='Diagram of limiting data merging', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
 knitr::include_graphics('figures/Figurelimiting.png')
 ```
 
 ## GIA models as a data cube
 
-The GIA models selected to compare with the sea-level indicators are a portion of 216 models that partially correspond to the models used by @dendy2017 and @Dyere2021. Each model corresponds to a different configuration of Ice and Earth modeling parameters and covers the last 400 ka. The authors shared the models as two hundred sixteen (216) `.mat` files (®Matlab). The name of each file stores the five parameter configuration of each model. Two hundred sixteen files were transformed into a single NetCDF file as an 8-dimensional data cube to simplify the operations and interaction with the collection of models. The models result in a 256x512 (lat-long) spatial grid with relative sea-level (RSL) values from the GIA component ($ISO_{GIA}$). Each model has 599 layers corresponding to a particular time from 400 to 0 ka. Table \@ref(tab:GIA-parameters) summarizes the dimensions and characteristics. Figure \@ref(fig:GIA-models-sample) corresponds to a portion of the GIA model output for a specific parameter configuration.
+The GIA models selected to compare with the sea-level indicators are a portion of 216 models that partially correspond to the models used by @dendy2017 and @Dyere2021. Each model corresponds to a different configuration of Ice and Earth modeling parameters and covers the last 400 ka. The authors shared the models as two hundred sixteen (216) `.mat` files (®Matlab). The name of each file stores the five parameter configuration of each model. Two hundred sixteen files were transformed into a single NetCDF file as an 8-dimensional data cube to simplify the operations and interaction with the collection of models. The models result in a 256x512 (lat-long) spatial grid with relative sea level (RSL) values from the GIA component ($ISO_{GIA}$). Each model has 599 layers corresponding to a particular time from 400 to 0 ka. Table \@ref(tab:GIA-parameters) summarizes the dimensions and characteristics. Figure \@ref(fig:GIA-models-sample) corresponds to a portion of the GIA model output for a specific parameter configuration.
 
 ```{r GIA-models-sample, fig.cap= 'GIA model portion for one parameter configuration. Lithospheric thickness=48 km, Upper mantle viscosity=0.3 10e23 Pa S, Lower mantle viscosity=3 10e23 Pa S, Ice model= Colleoni model, Propagation line = Wael-S.',fig.scap='GIA model example', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center", results='hide'}
 
