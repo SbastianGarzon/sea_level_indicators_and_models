@@ -1,4 +1,12 @@
+## Thesis dissertation
+
+The thesis dissertation is available in the [`Docs`] folder as a PDF file. 
+
 ## Thesis format
-This thesis uses the Oxford University template for R Markdown published by Ulrik Lyngs.
-[![DOI](https://zenodo.org/badge/159745024.svg)](https://zenodo.org/badge/latestdoi/159745024)
+
+This document uses the [`oxforddown`](https://github.com/ulyngs/oxforddown) template for `R Markdown` published by Ulrik Lyngs.
+
+## References
+
+The references of this document are included in the [`references.bib`](https://github.com/SbastianGarzon/sea_level_indicators_and_models/blob/master/Dissertation/references.bib) file.
 
