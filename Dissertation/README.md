@@ -1,6 +1,6 @@
 ## Thesis dissertation
 
-The thesis dissertation is available in the [`Docs`] folder as a PDF file. 
+The thesis dissertation is available in the [`Docs`]() folder as a PDF file. 
 
 ## Thesis format
 
