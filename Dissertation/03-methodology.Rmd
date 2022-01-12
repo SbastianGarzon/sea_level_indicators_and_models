@@ -55,7 +55,7 @@ prob = 1/N
 (\#eq:prob)
 \end{equation}
 
-```{r age-nopeak, echo = FALSE, message = FALSE, warning=FALSE}
+```{r age-nopeak-proc, echo = FALSE, message = FALSE, warning=FALSE}
 library(sf)
 library(dplyr)
 library(kableExtra)
@@ -66,18 +66,23 @@ RSL_example <- walis[walis$WALIS_ID=='RSL_700',]
 RSL_example<-st_as_sf(RSL_example,coords=c("Longitude","Latitude"))
 age_RSL_example <- extract_age(RSL_example,10000)
 
+```
+
+Table \@ref(tab:age-nopeak) shows the resulting extraction of Age parameters for sea-level indicator `r (unique(RSL_example$WALIS_ID)[1])` from `r (unique(RSL_example$Region)[1])`, `r (unique(RSL_example$Nation)[1])` [@cerrone2021]. In this example, the SLI have more than one temporal constraint from different dating techniques (i.e., radiometric dating and MIS assignment). 
+
+```{r age-nopeak, echo = FALSE, message = FALSE, warning=FALSE}
+
 total_dist <- age_RSL_example$distributions$total[,c('Type.of.datapoint','Age.calculation.from','Age_mu','Age_2s','Lower.age','Upper.age','prob')] 
 rownames(total_dist) <- c(1:nrow(total_dist))
 
 total_dist%>% knitr::kable(caption = "Extraction of Age parameters for SLIPs",
-                           col.names = c('Type of datapoint','Age calculation from', '$\\mu$','$2\\sigma$','Lower age','Upper age', 'Probability'), digits=2, escape = FALSE, booktabs=T) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down"))
+                           col.names = c('Type of datapoint','Age calculation from', '$\\mu$','$2\\sigma$','Lower age','Upper age', 'Probability'), digits=2, escape = FALSE, booktabs=T) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 ```
 
-Table \@ref(tab:age-nopeak) shows the resulting extraction of Age parameters for Sea level indicator `r (unique(RSL_example$WALIS_ID)[1])` from `r (unique(RSL_example$Region)[1])`, `r (unique(RSL_example$Nation)[1])`. In this example, the SLI have more than one temporal constraint from different dating techniques (i.e., radiometric dating and MIS assignment).
 
 ##### Uniform distributions in peaks
 
-There is a variation in the extraction of Age parameters for uniform distributions. This variation allows the extraction from only the age ranges that correspond to peaks (High stand) of sea level in the stack published by @Spratt2016stack (Figure \@ref(fig:stack-peaks)). This stack of sea-level variation during the last 800 ka comes from multiple proxies from ocean sediment core data. The peaks and their characteristics (e.g., width, initial, and endpoint) are determined using the `findpeaks()` functions from the `pracma` package [see @hanspracma].
+There is a variation in the extraction of Age parameters for uniform distributions. This variation allows the extraction from only the age ranges that correspond to peaks (highstand) of sea level in the stack published by @Spratt2016stack (Figure \@ref(fig:stack-peaks)). This stack of sea-level variation during the last 800 ka comes from multiple proxies from ocean sediment core data. The peaks and their characteristics (e.g., width, initial, and endpoint) are determined using the `findpeaks()` functions from the `pracma` package [see @hanspracma].
 
 An age range from peaks is defined by the width $W_{ap}$ of the range  (Initial $A_{Ip}$ and Endpoint of peak $A_{Ep}$), the age of peak maximum ($A_{Mp}$) and a factor ($f$) adjusting the width of the range. Given a peak with $A_{Ip} = 10$, $A_{Mp}= 20$, $A_{Ep}= 32$, and $f=0.1$ the range limits is define as:
 
@@ -110,7 +115,7 @@ plot(
   p_x,
   p_y,
   ylim = c(-150, 10),
-  xlim = c(0, 180),
+  xlim = c(180, 0),
   xlab = "Time (Ka)",
   ylab = "Sea level (m)"
 )
@@ -132,7 +137,7 @@ lines(unlist(sl_stack_spratt['Age.ka.']), unlist(sl_stack_spratt['X50.']), type 
 
 Code required to extract peaks from the sea-level stack published by @Spratt2016stack is available in the file `Methods\define_peaks_ranges.R`.
 
-As a uniform constraint could intersect more than one peak range, one uniform distribution from the initial age constraints could result in different smaller uniform distributions around sea-level peaks. In that case, the *peak ranges* (Figure \@ref(fig:stack-peaks)) replace the initial age constraints, and its probability $prob$ corresponds to the division by the number of *peak ranges* intersected. Table \@ref(tab:age-peaks) illustrates the parameter extraction for SLI `r (unique(RSL_example$WALIS_ID)[1])` [@cerrone2021] in which one of the initial age constraints intersects multiple *peak ranges*. For Age constraints that do not intersect any *peak range*, extraction parameters stay unmodified. Similarly, temporal constraints from radiometric ages stay unmodified (parameters and $prob$ value). Age extractions using this method are denominated as *Peak sampling* for future references in this text. An extraction of Age that keeps the original Uniform distribution parameters is called *No-peak sampling*.
+As a uniform constraint could intersect more than one peak range, one uniform distribution from the initial age constraints could result in different smaller uniform distributions around sea-level peaks. In that case, the *peak ranges* (Figure \@ref(fig:stack-peaks)) replace the initial age constraints, and its probability $prob$ corresponds to the division by the number of *peak ranges* intersected. Table \@ref(tab:age-peaks) illustrates the parameter extraction for SLI `r (unique(RSL_example$WALIS_ID)[1])` in which one of the initial age constraints intersects multiple *peak ranges*. For Age constraints that do not intersect any *peak range*, extraction parameters stay unmodified. Similarly, temporal constraints from radiometric ages stay unmodified (parameters and $prob$ value). Age extractions using this method are denominated as *Peak sampling* for future references in this text. An extraction of Age that keeps the original Uniform distribution parameters is called *No-peak sampling*.
 
 Code required to extract the Age parameter from sea-level indicators is available in `Methods\extract_age.R`.
 
@@ -148,7 +153,7 @@ total_dist%>% knitr::kable(caption = "Extraction of Age parameters for SLIPs wit
 ```
 #### Relative sea level (RSL)
 
-For the RSL, the parameter extraction follows the methodology explained by @garzon-rovere2021walis to compute the percentiles of the RSL distribution. For RSL indicators of *Sea Level Indicator* or *Single Speleothem* type, the parameters correspond to a normal distribution with mean ($\mu$) and standard deviation $\sigma$ (see Equations \@ref(eq:elevation) and \@ref(eq:deltarsl)). For RSl indicators that are of *Single Coral* type, additional calculations and parameters are required as RSL is assumed to have a gamma distribution. First, the parameters $\alpha$ and $\beta$ from the gamma distribution result from interpolation using the *Upper limit of living range* and *Lower limit of living range* parameters as the 2.3 and 97.7 percentiles. Second, the elevation $E$ parameters are extracted from the *Elevation* and *Elevation error* parameters from the WALIS database. Similar to the Age extraction, every constraint is assigned the same probability ($prob$) parameter (see Equation \@ref(eq:prob)).
+For the RSL, the parameter extraction follows the methodology explained by @garzon-rovere2021walis to compute the percentiles of the RSL distribution. For RSL indicators of *Sea level indicator* or *Single Speleothem* type, the parameters correspond to a normal distribution with mean ($\mu$) and standard deviation $\sigma$ (see Equations \@ref(eq:elevation) and \@ref(eq:deltarsl)). For RSl indicators that are of *Single Coral* type, additional calculations and parameters are required as RSL is assumed to have a gamma distribution. First, the parameters $\alpha$ and $\beta$ from the gamma distribution result from interpolation using the *Upper limit of living range* and *Lower limit of living range* parameters as the 2.3 and 97.7 percentiles. Second, the elevation $E$ parameters are extracted from the *Elevation* and *Elevation error* parameters from the WALIS database. Similar to the Age extraction, every constraint is assigned the same probability ($prob$) parameter (see Equation \@ref(eq:prob)).
 
 ```{r rsl-singlecoral, echo = FALSE, message = FALSE, warning=FALSE}
 library(sf)
@@ -182,7 +187,7 @@ total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for sea-level
 ```
 
 
-Table \@ref(tab:rsl-sli) shows parameter extraction for *Sea Level Indicator*  `r (unique(RSL_example_coral$WALIS_ID)[1])` from `r (unique(RSL_example_coral$Site)[1])` [@churcharavan2021]. All parameters for the different constraints are identical as sea-level indicators RSL usually come from a single observation (e.g., A single *Indicative range*). Code required to extract the *RSL* parameter from sea-level indicators (SLIs) is available in the file `Methods\extract_RSL.R`.
+Table \@ref(tab:rsl-sli) shows parameter extraction for the sea-level indicator  `r (unique(RSL_example_coral$WALIS_ID)[1])` from `r (unique(RSL_example_coral$Site)[1])` [@churcharavan2021]. All parameters for the different constraints are identical as sea-level indicators RSL usually come from a single observation (e.g., A single *Indicative range*). Code required to extract the *RSL* parameter from sea-level indicators (SLIs) is available in the file `Methods\extract_RSL.R`.
 
 ### Limiting data
 
@@ -210,7 +215,7 @@ total_dist%>% knitr::kable(caption = "Extraction of RSL parameters for limiting 
 
 ```
 
-Table \@ref(tab:limiting-rsl) shows parameter extraction for Sea Level Indicator `r (unique(limiting_example$WALIS_ID)[1])` from `r (unique(limiting_example$Region)[1])`, `r (unique(limiting_example$Nation)[1])`[@Cohen2021]. As in the previous case, all RLS parameters are equal.
+Table \@ref(tab:limiting-rsl) shows parameter extraction for sea-level indicator `r (unique(limiting_example$WALIS_ID)[1])` from `r (unique(limiting_example$Region)[1])`, `r (unique(limiting_example$Nation)[1])`[@Cohen2021]. As in the previous case, all RLS parameters are equal.
 
 ## Merging sea-level indicators
 
@@ -218,11 +223,11 @@ After extraction of Age and RSL parameters, all constraints of individual sea-le
 
 ### Sea level index points merge
 
-For both Age and RSL, the sea-level index points (SLIPs) merging results from applying a Monte Carlo sampling technique. This sampling strategy is a variation of the method proposed by @bender2020. The sampling consists of two steps: 1) randomly select a constraint (see Table \@ref(tab:age-peaks) for Age and \@ref(tab:rsl-sli) for RSL) and then randomly select a value using its Age/RSL distribution parameters. For RSL in *Single Coral* samples, the value selection requires sampling from the *living range* gamma distribution (Upper and lower) and the normal distribution of the elevation to compute the RSL. The sum of both values results in the RSL of the Sea level indicator. This calculation is not required for other types of indicators as *RSL* is already available by applying Equations \@ref(eq:elevation) to \@ref(eq:deltarsl). This process is repeated *P* times (defined by the user) and results in a point cloud of *RSL* and *Age* values. 
+For both Age and RSL, the sea-level index points (SLIPs) merging results from applying a Monte Carlo sampling technique. This sampling strategy is a variation of the method proposed by @bender2020. The sampling consists of two steps: randomly select a constraint (see Table \@ref(tab:age-peaks) for Age and \@ref(tab:rsl-sli) for RSL) and then randomly select a value using its Age/RSL distribution parameters. For RSL in *Single Coral* samples, the value selection requires sampling from the *living range* gamma distribution (Upper and lower) and the normal distribution of the elevation to compute the RSL. The sum of both values results in the RSL of the sea-level indicator. This calculation is not required for other types of indicators as RSL is already available by applying Equations \@ref(eq:elevation) to \@ref(eq:deltarsl). This process is repeated *P* times (defined by the user) and results in a point cloud of RSL and Age values. 
 
 Figure \@ref(fig:join-age-rsl) illustrates the differences in *Age* and *RSL* distributions between the same SLIP by applying the *No-peak sampling* and the *Peak sampling* method.
 
-```{r join-age-rsl, fig.cap= 'SLI sampling with two different Age sampling strategies',fig.scap='Sea -level indicators sampling', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
+```{r join-age-rsl, fig.cap= 'SLI sampling with two different Age sampling strategies. (Left) No-peak sampling (Rigth) Peak-sampling.',fig.scap='Sea-level indicators sampling', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
 library(ggplot2)
 library(cowplot)
 library(gridExtra)
@@ -244,13 +249,13 @@ SLI_merge <- join_age_rsl(age_sli,rsl_sli)
 SLI_peak_merge <- join_age_rsl(age_sli_peaks,rsl_sli)
 
 
-plot1 <- ggplot(SLI_merge$sli_sample, aes(x=AGE, y=RSL) ) + xlim(80,150) + ylim(15,45) + stat_density_2d(aes(fill = ..level..), geom = "polygon") + scale_fill_continuous(limits=c(0,0.004)) + xlab('Time (Ka)')+ ylab('RSL (m)')+ theme(legend.position="left") 
+plot1 <- ggplot(SLI_merge$sli_sample, aes(x=AGE, y=RSL) ) + xlim(150,80) + ylim(15,45) + stat_density_2d(aes(fill = ..level..), geom = "polygon") + scale_fill_continuous(limits=c(0,0.004)) + xlab('Time (Ka)')+ ylab('RSL (m)')+ theme(legend.position="left") 
 #Save the legend
 legend <- get_legend(plot1)
 #Remove the legend
 plot1 <- plot1 + theme(legend.position="none")
 
-plot2 <- ggplot(SLI_peak_merge$sli_sample, aes(x=AGE, y=RSL) ) + xlim(80,150) + ylim(15,45)+ stat_density_2d(aes(fill = ..level..), geom = "polygon")+ scale_fill_continuous(limits=c(0,0.004))+ xlab('Time (Ka)')+ ylab('RSL (m)')+theme(legend.position="none")
+plot2 <- ggplot(SLI_peak_merge$sli_sample, aes(x=AGE, y=RSL) ) + xlim(150,80) + ylim(15,45)+ stat_density_2d(aes(fill = ..level..), geom = "polygon")+ scale_fill_continuous(limits=c(0,0.004))+ xlab('Time (Ka)')+ ylab('RSL (m)')+theme(legend.position="none")
 
 
 grid.arrange(plot1, plot2, legend, ncol=3, nrow = 1,
@@ -272,7 +277,7 @@ knitr::include_graphics('figures/Figurelimiting.png')
 
 The GIA models selected to compare with the sea-level indicators are a portion of 216 models that partially correspond to the models used by @dendy2017 and @Dyere2021. Each model corresponds to a different configuration of Ice and Earth modeling parameters and covers the last 400 ka. The authors shared the models as two hundred sixteen (216) `.mat` files (®Matlab). The name of each file stores the five parameter configuration of each model. Two hundred sixteen files were transformed into a single NetCDF file as an 8-dimensional data cube to simplify the operations and interaction with the collection of models. The models result in a 256x512 (lat-long) spatial grid with relative sea level (RSL) values from the GIA component ($ISO_{GIA}$). Each model has 599 layers corresponding to a particular time from 400 to 0 ka. Table \@ref(tab:GIA-parameters) summarizes the dimensions and characteristics. Figure \@ref(fig:GIA-models-sample) corresponds to a portion of the GIA model output for a specific parameter configuration.
 
-```{r GIA-models-sample, fig.cap= 'GIA model portion for one parameter configuration. Lithospheric thickness=48 km, Upper mantle viscosity=0.3 10e23 Pa S, Lower mantle viscosity=3 10e23 Pa S, Ice model= Colleoni model, Propagation line = Wael-S.',fig.scap='GIA model example', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center", results='hide'}
+```{r GIA-models-sample, fig.cap= 'GIA model portion for one parameter configuration. Lithospheric thickness=48 km, Upper mantle viscosity=0.3 10e23 Pa S, Lower mantle viscosity=3 10e23 Pa S, Ice model= Colleoni model, Propagation line = Wael-S.',fig.scap='GIA model example', echo = FALSE, message = FALSE, warning=FALSE, out.width = "100%",fig.align = "center", results='hide'}
 
 library(stars)
 r = read_ncdf("../Data/GIA_Austermann_2019.nc", ncsub = cbind(start = c(1,1,1,1,1,1,1,2), count = c(512,256,1,1,1,1,1,100)))
@@ -307,7 +312,7 @@ Values resulting from the residual calculation are distributed irregularly along
 ## Evaluation - Case studies
 
 Two areas with different geological characteristics were selected to test the methodology. The selected areas are: 1) the passive tectonic margin from the South American Atlantic coast and 2) the active tectonic margin from the Pacific coast. Each area was divided into four sub-regions to test whether the methodology differentiates regional trends by mean residual values. SLIPs in the area were extracted from the World Atlas of Last Interglacial Shorelines database (WALIS) using the location parameter. Table \@ref(tab:WALIS-references) shows the WALIS compiler and SLIPs references by case study.
-The areas were compared with the *No-peak sampling* and *Peak sampling* methods for uniform age constraints to test the differences due to the extraction method (i.e., sampling method). Each sea-level index point was sampled 10.000 times for *RSL* and *Age* values. For example, a sub-region with 100 SLIPs would result in an *RSL/Age* point cloud of 1.000.000 values. Subsequently, 30% of the *RSL/Age* point cloud from the regions was compared with the GIA values from the area to obtain the residual ($\varepsilon$) value. The identification of SLIPs (i.e., WALIS ID) of origin and model parameters from the GIA value is included to test potential residual differences due to these parameters. 
+The areas were compared with the *No-peak sampling* and *Peak sampling* methods for uniform age constraints to test the differences due to the extraction method (i.e., sampling method). Each sea-level index point was sampled 10.000 times for RSL and Age values. For example, a sub-region with 100 SLIPs would result in an RSL/Age point cloud of 1.000.000 values. Subsequently, 30% of the RSL/Age point cloud from the regions was compared with the GIA values from the area to obtain the residual ($\varepsilon$) value. The identification of SLIPs (i.e., WALIS ID) of origin and model parameters from the GIA value is included to test potential residual differences due to these parameters. 
 
 Given the characteristics of the proposed methodology and the resulting residual values, evaluating differences in the central tendency by model parameters would require additional modeling of the process. As an alternative, in the case studies, differences in central tendency by grouping parameters (e.g., model parameters, region, specific model) are evaluated using the non-parametric statistical Kruskal-Wallis and Wilcoxon test. However, results from these tests must be held with caution as residual values do not meet the assumption of independence. 
 
@@ -315,7 +320,7 @@ Code required to compare Residual ($\varepsilon$) from different regions is avai
 
 ## Methodology reproducibility
 
-This document is machine-generated using the `Oxforddown` thesis template published by @lyngsOxforddown2019. The code required to reproduce all sections of this document is available at [https://github.com/SbastianGarzon/sea_level_indicators_and_models](https://github.com/SbastianGarzon/sea_level_indicators_and_models). The repository contains three main folders, `Methods`, `Dissertation` and `Data`. In the `Methods` folder, there are the `R scripts` required to perform the different steps of the proposed methodology. The `Dissertation` folder contains `Rmarkdown` files for the different chapters of this document (e.g., Dissertation/03-methodology.RMD corresponds to this chapter). Consequently, all figures and tables (except diagrams) in this document are reproducible. After installing the required libraries, Knit the `index.Rmd` file (see. `renv.lock` file) to generate the document. The `Data` folder contains the required external data sets that correspond to the WALIS summary table (`walis.csv`)[see @Rovere2020], the collection of GIA models (`GIA_Austermann_2019.nc`) [see @dendy2017; @Dyere2021], the sea-level stack published by @Spratt2016stack and the delimitation of the areas for the case studies (`CaseStudy_1.kml` and `CaseStudy_1.kml`). The Github repository does not contain the GIA models file (60GB) [see @dendy2017; @Dyere2021] as these models were privately shared for this project by the authors. Request to access the GIA data sets can be sent to [jgarzon@uni-muenster.de](mailto:jgarzon@uni-muenster.de).
+This document is machine-generated using the `Oxforddown` thesis template published by @lyngsOxforddown2019. The code required to reproduce all sections of this document is available at [https://github.com/SbastianGarzon/sea_level_indicators_and_models](https://github.com/SbastianGarzon/sea_level_indicators_and_models). The repository contains three main folders, `Methods`, `Dissertation` and `Data`. In the `Methods` folder, there are the `R scripts` required to perform the different steps of the proposed methodology. The `Dissertation` folder contains `Rmarkdown` files for the different chapters of this document (e.g., Dissertation/03-methodology.RMD corresponds to this chapter). Consequently, all figures and tables (except diagrams) in this document are reproducible. After installing the required libraries (see. `renv.lock` file), knit the `index.Rmd` file to generate the document. The `Data` folder contains the required external data sets that correspond to the WALIS summary table (`walis.csv`)[see @Rovere2020], the collection of GIA models (`GIA_Austermann_2019.nc`) [see @dendy2017; @Dyere2021], the sea-level stack published by @Spratt2016stack and the delimitation of the areas for the case studies (`CaseStudy_1.kml` and `CaseStudy_1.kml`). The Github repository does not contain the GIA models file (60GB) [see @dendy2017; @Dyere2021] as these models were privately shared for this project by the authors. Request to access the GIA data sets can be sent to [jgarzon@uni-muenster.de](mailto:jgarzon@uni-muenster.de).
 (ref:studies-table-ref1) @Rubio2021
 (ref:studies-table-ref2) @Gowan2021
 (ref:studies-table-ref3) @Freisleben2021

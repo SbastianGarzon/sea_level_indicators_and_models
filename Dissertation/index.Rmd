@@ -151,7 +151,6 @@ documentclass: book
 always_allow_html: true #this allows html stuff in word (.docx) output
 ---
 
-
 ```{r install_packages, include=FALSE}
 source('scripts_and_filters/install_packages_if_missing.R')
 ```
