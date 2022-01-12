@@ -14,6 +14,19 @@ bibliography: references.bib
 
 # Methodology {#methodology}
 
+
+```{r load-packages-methodology, echo = FALSE, message = FALSE,error=FALSE,warning=FALSE}
+
+# Load libraries
+library(sf)
+library(dplyr)
+library(kableExtra)
+library(ggplot2)
+library(gridExtra)
+library(cowplot)
+library(stars)
+```
+
 The proposed methodology for comparing sea-level indicators and sea-level models consists of algorithms to compute the difference between $RSL$ recorded by SLIs and the glacial isostatic adjustment models ($\Delta ISO_{GIA}(\varphi,t)$). Due to their differences, SLI and limiting data points have different manipulations. In general terms, the methodology consists of random sampling in both age and RSL parameters for the SLI and then compute a Monte Carlo simulation process that randomly samples the GIA models and calculates the difference with SLI values. Following Equation \@ref(eq:rsl-process) and \@ref(eq:isogiafingerprint) the subtraction results in a residual ($\varepsilon$):
 
 \begin{equation}
@@ -56,9 +69,7 @@ prob = 1/N
 \end{equation}
 
 ```{r age-nopeak-proc, echo = FALSE, message = FALSE, warning=FALSE}
-library(sf)
-library(dplyr)
-library(kableExtra)
+
 source('../Methods/extract_age.R')
 # Import WALIS
 walis<-read.csv("../Data/walis.csv")
@@ -156,8 +167,7 @@ total_dist%>% knitr::kable(caption = "Extraction of Age parameters for SLIPs wit
 For the RSL, the parameter extraction follows the methodology explained by @garzon-rovere2021walis to compute the percentiles of the RSL distribution. For RSL indicators of *Sea level indicator* or *Single Speleothem* type, the parameters correspond to a normal distribution with mean ($\mu$) and standard deviation $\sigma$ (see Equations \@ref(eq:elevation) and \@ref(eq:deltarsl)). For RSl indicators that are of *Single Coral* type, additional calculations and parameters are required as RSL is assumed to have a gamma distribution. First, the parameters $\alpha$ and $\beta$ from the gamma distribution result from interpolation using the *Upper limit of living range* and *Lower limit of living range* parameters as the 2.3 and 97.7 percentiles. Second, the elevation $E$ parameters are extracted from the *Elevation* and *Elevation error* parameters from the WALIS database. Similar to the Age extraction, every constraint is assigned the same probability ($prob$) parameter (see Equation \@ref(eq:prob)).
 
 ```{r rsl-singlecoral, echo = FALSE, message = FALSE, warning=FALSE}
-library(sf)
-library(kableExtra)
+
 source('../Methods/extract_rsl.R')
 # Import WALIS
 walis<-read.csv("../Data/walis.csv")
@@ -228,9 +238,6 @@ For both Age and RSL, the sea-level index points (SLIPs) merging results from ap
 Figure \@ref(fig:join-age-rsl) illustrates the differences in *Age* and *RSL* distributions between the same SLIP by applying the *No-peak sampling* and the *Peak sampling* method.
 
 ```{r join-age-rsl, fig.cap= 'SLI sampling with two different Age sampling strategies. (Left) No-peak sampling (Rigth) Peak-sampling.',fig.scap='Sea-level indicators sampling', echo = FALSE, message = FALSE, warning=FALSE, out.width = "90%",fig.align = "center"}
-library(ggplot2)
-library(cowplot)
-library(gridExtra)
 
 source('../Methods/join_age_rsl.R')
 
@@ -279,7 +286,6 @@ The GIA models selected to compare with the sea-level indicators are a portion o
 
 ```{r GIA-models-sample, fig.cap= 'GIA model portion for one parameter configuration. Lithospheric thickness=48 km, Upper mantle viscosity=0.3 10e23 Pa S, Lower mantle viscosity=3 10e23 Pa S, Ice model= Colleoni model, Propagation line = Wael-S.',fig.scap='GIA model example', echo = FALSE, message = FALSE, warning=FALSE, out.width = "100%",fig.align = "center", results='hide'}
 
-library(stars)
 r = read_ncdf("../Data/GIA_Austermann_2019.nc", ncsub = cbind(start = c(1,1,1,1,1,1,1,2), count = c(512,256,1,1,1,1,1,100)))
 r # has all the singular dimensions present
 plot(adrop(r), mfrow = c(10,10), box_col = 'black') 
