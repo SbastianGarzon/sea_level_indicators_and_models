@@ -15,7 +15,7 @@ Prof. Pebesma (Institute for Geoinformatics - University of Münster :de: ) and 
 In my machine, this is the `sf` loading message:
 `Linking to GEOS 3.9.0, GDAL 3.2.1, PROJ 7.2.1`
 
-2. Check that you have all the datasets described in the [`Data/README.md`]() file. You might need to [:email: email me](mailto:jgarzon@uni-muenster.de) to access to the (60GB) NetCDF file with the GIA models.
+2. Check that you have all the datasets described in the [`Data/README.md`](https://github.com/SbastianGarzon/sea_level_indicators_and_models/blob/master/Data/README.md) file. You might need to [:email: email me](mailto:jgarzon@uni-muenster.de) to access to the (60GB) NetCDF file with the GIA models.
 I'm working to find a way to avoid this step. However, at this moment, this is the only option.
 
 ## Steps
