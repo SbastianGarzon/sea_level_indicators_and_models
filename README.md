@@ -1,7 +1,7 @@
 # A methodology to compare sea-level indicators and sea-level models
 
 This repository contains the code used to compile my thesis dissertation for the M.Sc Geoinformatics at the University of Münster during winter semester 2021/22. This document uses the [`oxforddown`](https://github.com/ulyngs/oxforddown) template for `R Markdown` published by Ulrik Lyngs. \
-Prof. Pebesma (Institute for Geoinformatics - University of Münster :de: ) and Prof. Rovere (University of Venice :it: ) supervised the project. 
+Prof. Edzer Pebesma (Institute for Geoinformatics - University of Münster :de: ) and Prof. Alessio Rovere (University of Venice :it: ) supervised the project. 
 
 # Document
 
