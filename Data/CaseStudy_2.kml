@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>Shapes</name><Placemark>
+<Style id="style0"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>Ecuador-Peru[N]</name>
+<description>Ecuador-Peru[N]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-81.95341112419926,0.9974594256870337,0 -81.84895342018437,-6.4881028547192425,0 -78.73072756612797,-6.4822349139692905,0 -78.89133598682875,0.9974594256870337,0 -81.95341112419926,0.9974594256870337,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style0</styleUrl></Placemark>
+<Placemark>
+<Style id="style1"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>Peru[C-S]</name>
+<description>Peru[C-S]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-74.29279860867346,-18.341503597435665,0 -68.50271472338915,-18.325338327653014,0 -78.72882874447544,-6.4930181859957115,0 -81.85485915096858,-6.517441532093221,0 -74.29279860867346,-18.341503597435665,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style1</styleUrl></Placemark>
+<Placemark>
+<Style id="style2"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>Chile[N]</name>
+<description>Chile[N]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-71.37301443373062,-18.358561372631662,0 -69.0289432404984,-18.348760356744485,0 -69.64686753218481,-29.32717765453724,0 -72.26559782659933,-29.33226183720726,0 -71.37301443373062,-18.358561372631662,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style2</styleUrl></Placemark>
+<Placemark>
+<Style id="style3"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>Chile[C]</name>
+<description>Chile[C]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-72.29576049309945,-29.34921527491283,0 -70.22832258121451,-29.341674915054828,0 -69.72251901338922,-29.3399188176835,0 -70.8416405921817,-40.09464646793414,0 -74.61950672559018,-40.156108004918615,0 -72.53725184950336,-30.750397952492023,0 -72.29576049309945,-29.34921527491283,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style3</styleUrl></Placemark>
+</Document>
+</kml>

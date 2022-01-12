@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+<name>Shapes</name><Placemark>
+<Style id="style0"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>BR[NE]</name>
+<description>BR[NE]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-42.89359311364555,-3.789881992164561,0 -42.684996094159516,-19.0,0 -34.0,-19.0, 0 -34.0,-3.789881992164561,0 -42.89359311364555,-3.789881992164561,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style0</styleUrl></Placemark>
+<Placemark>
+<Style id="style1"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>BR[S]</name>
+<description>BR[S]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-52.884095191992884,-23.95771232785404,0 -52.95770440392626,-30.739580387490847,0 -46.107075302921004,-30.733867854390848,0 -46.22712272929164,-23.95771232785404,0 -52.884095191992884,-23.95771232785404,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style1</styleUrl></Placemark>
+<Placemark>
+<Style id="style2"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>ARG[NE]-UY</name>
+<description>ARG[NE]-UY</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-65.76977695934568,-33.38761055867965,0 -52.382525118510856,-33.495891645805145,0 -52.53133686676496,-43.632679646550756,0 -65.89377130441274,-43.501200505766064,0 -65.76977695934568,-33.38761055867965,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style2</styleUrl></Placemark>
+<Placemark>
+<Style id="style3"><PolyStyle><fill>1</fill><color>66aa5500</color></PolyStyle><LineStyle><width>2</width><color>99aa5500</color></LineStyle></Style>
+<name>ARG[SE]</name>
+<description>ARG[SE]</description>
+<Polygon><outerBoundaryIs><LinearRing><coordinates>-69.23061491382083,-44.60125814708486,0 -69.34397439355637,-49.2425155297888,0 -69.40065413342414,-55.00841137915912,0 -62.03228795061294,-55.04090155690645,0 -62.25900691008407,-44.60125814708486,0 -64.41283702505963,-44.64160070791512,0 -66.68002661977079,-44.60125814708486,0 -69.23061491382083,-44.60125814708486,0 </coordinates></LinearRing></outerBoundaryIs></Polygon><styleUrl>#style3</styleUrl></Placemark>
+</Document>
+</kml>
