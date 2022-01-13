@@ -31,5 +31,5 @@ I'm working to find a way to avoid this step. However, at this moment, this is t
 # Cite this work
 
 Garzon, Sebastian. 2022. A methodology to compare sea level-indicators and sea-level models. MSc Dissertation, Westfälische Wilhelms-Universität Münster. \
-[:book: Get Bibtext file](https://github.com/SbastianGarzon/sea_level_indicators_and_models/blob/master/ref.bib)\
+[:book: Get Bibtext file](https://github.com/SbastianGarzon/sea_level_indicators_and_models/blob/master/ref.bib)
 
