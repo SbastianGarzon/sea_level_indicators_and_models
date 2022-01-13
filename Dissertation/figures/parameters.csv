@@ -1,0 +1,11 @@
+Dimension, Number of parameters,Values, units, interval
+Time, 599,0 to 400, ka, irregular 
+Longitude,512,0 to 359.29, degrees, 0.703125
+Latitude, 256, 89.46 to -89.46, degrees, irregular
+Lithospheric thickness, 3, 48 to 96, km, irregular
+Upper mantle viscosity, 2, 0.3 to 0.5, 10e21 Pa s, 0.2
+Lower mantle viscosity, 6, 3 to 30, 10e21 Pa s, irregular
+Ice Model, 3, Colleoni\ICE6G\Lambeck, Model type, -
+Propagation, 2, Wael-s & Wael-T, Propagation model type, -
+
+
