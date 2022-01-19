@@ -64,7 +64,7 @@ sl_stack <- read.csv("../Data/sea_level_stack_spratt.csv",sep = "")
 
 ### Area of study
 
-The South American Atlantic coast (see Figure \@ref(fig:area-of-study-south-america)) was divided into four different regions to compare sea-level indicators and GIA models using the proposed methodology in a passive margin. These areas correspond to the North East (BR[NE]) and South of Brazil (BR[S]), the Northern Argentinian and Uruguayan coast (ARG[NE]-UY), and the southeast of Argentina (ARG[SE]). There are a total number of 250 sea-level index points in the whole area of study. The selected sea-level index points are part of two SLIs compilations for the South American Atlantic coast published by @Rubio2021 and @Gowan2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 46 different publications in five different languages (English, Portuguese, Spanish, French, and German) since 1973 in this region. The criteria used to define the areas correspond to proximity (latitudinal distance) between sea-level indicators. Table \@ref(tab:sa-atlantic-num-slip) shows the total number of SLIPs and the origin of their age calculation (i.e., radiometric dating or MIS assignment).
+The South American Atlantic coast (see Figure \@ref(fig:area-of-study-south-america)) was divided into four different regions to compare sea-level indicators and GIA models using the proposed methodology in a passive margin. These areas correspond to the North East (BR[NE]) and South of Brazil (BR[S]), the Northern Argentinian and Uruguayan coast (ARG[NE]-UY), and the southeast of Argentina (ARG[SE]). There are a total number of 67 sea-level index points in the whole area of study. The selected sea-level index points are part of two SLIs compilations for the South American Atlantic coast published by @Rubio2021 and @Gowan2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 46 different publications in five different languages (English, Portuguese, Spanish, French, and German) since 1973 in this region. The criteria used to define the areas correspond to proximity (latitudinal distance) between sea-level indicators. Table \@ref(tab:sa-atlantic-num-slip) shows the total number of SLIPs and the origin of their age calculation (i.e., radiometric dating or MIS assignment).
 
 ```{r area-of-study-south-america,cache=TRUE, fig.cap= 'South American Atlantic coast. Regions and sea-level indicators location.',fig.scap= 'South American Atlantic coast - Regions and sea-level indicators location', echo = FALSE, message = FALSE,error=FALSE,warning=FALSE,results='hide', out.width = "50%",dpi=300,fig.align = "center"}
 
@@ -99,12 +99,12 @@ sa_atlantic_sli$subregion <- factor(region_sa_atlantic$Name[unlist(st_intersects
 
 sa_atl_SLIP <- sa_atlantic_sli[sa_atlantic_sli$Type.of.datapoint=='Sea Level Indicator',]
 
-table <- sa_atl_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiometric=sum(Age.calculation.from=='Radiometric dating'),uniform=sum(Age.calculation.from!='Radiometric dating')) %>% st_drop_geometry()
+table <- sa_atl_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=length(unique(WALIS_ID)),radiometric=sum(Age.calculation.from=='Radiometric dating'),uniform=sum(Age.calculation.from!='Radiometric dating')) %>% st_drop_geometry()
 
 table$subregion <- factor(table$subregion,levels=c('BR[NE]','BR[S]','ARG[NE]-UY','ARG[SE]'))
 
-table%>%arrange(subregion)%>% knitr::kable(caption = "South America Atlantic coast - Number of SLIPs by region",
-                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
+table%>%arrange(subregion)%>% knitr::kable(caption = "South America Atlantic coast - Number of SLIPs by subregion",
+                           col.names = c('Region name','Number of sea level index points','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation (Number of constraints)" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 ```
 
@@ -397,7 +397,7 @@ Mean residual values grouped by region are shown in Figure \@ref(fig:south-ameri
 
 ### Area of study
 
-The proposed comparison methodology was tested in an active tectonic margin along four different regions in the pacific coast of South American (see Figure \@ref(fig:area-of-study-south-america-pacific)). These areas correspond to the Ecuadorian and northern Peruvian coast (Ecuador-Peru[n]), the central and southern Peruvian coast (Peru[C-S]), the northern and central Chilean coast (Chile[N] and Chile[C]). There are 2150 sea-level index points (type of data point) for the whole area of study. The selected sea-level index points include indicators included in the recompilation of @Freisleben2021 and @Thompson2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 43 different publications in three different languages (English, Spanish and French) since 1977 in this region. More than 80% of SLIPs in this region have a designated MIS uniform temporal constraint (see Table \@ref(tab:sa-pacific-num-slip)). The selected areas division corresponds to the four sectors proposed by @Freisleben2021 based on the main geomorphic characteristics of the Pacific coast of South America.
+The proposed comparison methodology was tested in an active tectonic margin along four different regions in the pacific coast of South American (see Figure \@ref(fig:area-of-study-south-america-pacific)). These areas correspond to the Ecuadorian and northern Peruvian coast (Ecuador-Peru[n]), the central and southern Peruvian coast (Peru[C-S]), the northern and central Chilean coast (Chile[N] and Chile[C]). There are 1953 sea-level index points (type of data point) for the whole area of study. The selected sea-level index points include indicators included in the recompilation of @Freisleben2021 and @Thompson2021 using the WALIS database standard. This compilation includes observations, measurements, and interpretations from 43 different publications in three different languages (English, Spanish and French) since 1977 in this region. More than 80% of Age parameters in this region have a designated MIS uniform temporal constraint (see Table \@ref(tab:sa-pacific-num-slip)). The selected areas division corresponds to the four sectors proposed by @Freisleben2021 based on the main geomorphic characteristics of the Pacific coast of South America.
 
 ```{r area-of-study-south-america-pacific, fig.cap= 'South American Pacific coast.',fig.scap='South American Pacific coast - Regions and sea-level indicators location.', echo = FALSE, message =FALSE,error=FALSE,warning=FALSE,results='hide', out.width = "40%",dpi=300,fig.align = "center",fig.pos='h'}
 
@@ -432,12 +432,12 @@ sa_pacific_sli$subregion <- factor(regions_sa_pacific$Name[unlist(st_intersects(
 
 sa_pac_SLIP <- sa_pacific_sli[sa_pacific_sli$Type.of.datapoint=='Sea Level Indicator',]
 
-table <- sa_pac_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=n(),radiometric=sum(Age.calculation.from=='Radiometric dating'),uniform=sum(Age.calculation.from!='Radiometric dating')) %>% st_drop_geometry()
+table <- sa_pac_SLIP %>% group_by(subregion) %>% summarize(num_SLIP=length(unique(WALIS_ID)),radiometric=sum(Age.calculation.from=='Radiometric dating'),uniform=sum(Age.calculation.from!='Radiometric dating')) %>% st_drop_geometry()
 
 table$subregion <- factor(table$subregion,levels=c('Ecuador-Peru[N]','Peru[C-S]','Chile[N]','Chile[C]'))
 
-table%>%arrange(subregion)%>% knitr::kable(caption = "South America Pacific coast - Number of SLIPs by region",
-                           col.names = c('Region name','Number of Sea level Indicators','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
+table%>%arrange(subregion)%>% knitr::kable(caption = "South America Pacific coast - Number of SLIPs by subregion",
+                           col.names = c('Region name','Number of sea level index points','Radiometric dating','MIS assignment (Uniform)'), escape = FALSE, booktabs=T, digits = 1) %>%add_header_above(c(" "=2, "Origin age calculation (Number of constraints)" = 2)) %>% kable_styling(font_size = 10,latex_options = c("striped", "scale_down","HOLD_position"))
 
 
 ```
