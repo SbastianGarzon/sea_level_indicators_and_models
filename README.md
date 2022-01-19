@@ -1,7 +1,7 @@
 # A methodology to compare sea-level indicators and sea-level models
 
 This repository contains the code used to compile my thesis dissertation for the M.Sc Geoinformatics at the University of Münster during winter semester 2021/22. This document uses the [`oxforddown`](https://github.com/ulyngs/oxforddown) template for `R Markdown` published by Ulrik Lyngs. \
-Prof. Edzer Pebesma (Institute for Geoinformatics - University of Münster :de: ) and Prof. Alessio Rovere (University of Venice :it: ) supervised the project. 
+Prof. Edzer Pebesma (Institute for Geoinformatics - University of Münster :de: ) and Prof. Alessio Rovere (Ca' Foscari University of Venice :it: ) supervised the project. 
 
 # Document
 
@@ -32,3 +32,4 @@ I'm working to find a way to avoid this step. However, at this moment, this is t
 
 Garzon, Sebastian. 2022. A methodology to compare sea level-indicators and sea-level models. MSc Dissertation, Westfälische Wilhelms-Universität Münster. \
 [:book: Get Bibtext file](https://github.com/SbastianGarzon/sea_level_indicators_and_models/blob/master/ref.bib)
+
