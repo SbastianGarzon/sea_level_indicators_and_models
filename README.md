@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/385634888.svg)](https://zenodo.org/badge/latestdoi/385634888)
 # A methodology to compare sea-level index points and sea-level models
 
 This repository contains the code used to compile my thesis dissertation for the M.Sc Geoinformatics at the University of Münster during winter semester 2021/22. This document uses the [`oxforddown`](https://github.com/ulyngs/oxforddown) template for `R Markdown` published by Ulrik Lyngs. \
